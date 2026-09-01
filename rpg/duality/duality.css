@@ -1,0 +1,1740 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bone: #d8cfba;
+  --ash: #8b8375;
+  --black: #11110f;
+  --black-soft: #171612;
+  --rust: #6f2f27;
+
+  --paper: #cbbd98;
+  --paper-dark: #aa9870;
+  --paper-light: #ded1ad;
+
+  --ink: #231e16;
+  --ink-soft: #514936;
+
+  --blood: #65251f;
+  --blood-dark: #421714;
+
+  --gold: #8a723e;
+  --gold-dark: #62502c;
+
+  --line: #39362f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 0 1px,
+      transparent 1px 31px
+    ),
+    var(--black);
+
+  color: var(--bone);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+}
+
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+button {
+  font: inherit;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.site-header {
+  position: relative;
+  z-index: 20;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding: 0.8rem 3vw;
+
+  border-bottom: 1px solid var(--line);
+
+  background: rgba(17, 17, 15, 0.95);
+  color: var(--ash);
+
+  font: 700 0.72rem/1 monospace;
+}
+
+.site-header a {
+  color: inherit;
+}
+
+
+/* ============================================================
+   ELEMENTOS GERAIS
+============================================================ */
+
+.eyebrow {
+  color: var(--ash);
+
+  font: 800 0.72rem/1.2 monospace;
+  letter-spacing: 0.18em;
+}
+
+h1,
+h2,
+p {
+  text-wrap: pretty;
+}
+
+h2 {
+  margin: 0.5rem 0 2rem;
+
+  font-size: clamp(2.6rem, 7vw, 6.5rem);
+  line-height: 0.9;
+
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+
+.world-page {
+  position: relative;
+
+  min-height: 100svh;
+
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   INTRO
+============================================================ */
+
+.intro {
+  min-height: 94svh;
+
+  display: grid;
+  place-items: center;
+  align-content: center;
+
+  padding: 7vw;
+
+  text-align: center;
+
+  border-bottom: 1px solid var(--line);
+
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(111, 47, 39, 0.09),
+      transparent 34%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 79px,
+      rgba(255, 255, 255, 0.018) 80px
+    );
+}
+
+.intro-mark {
+  width: clamp(5rem, 10vw, 8rem);
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 1rem;
+
+  border: 1px solid #443e35;
+  border-radius: 50%;
+
+  transform: rotate(45deg);
+}
+
+.intro-mark span {
+  color: var(--rust);
+
+  font-size: clamp(3rem, 7vw, 5.5rem);
+
+  transform: rotate(-45deg);
+}
+
+.intro h1 {
+  margin: 0;
+
+  font-size: clamp(5rem, 18vw, 14rem);
+  line-height: 0.8;
+
+  letter-spacing: -0.08em;
+  font-weight: 400;
+}
+
+.lead {
+  max-width: 700px;
+
+  margin: 2rem auto;
+
+  color: #b7ae9b;
+
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.55;
+}
+
+.descent-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  margin-top: 2rem;
+
+  color: var(--bone);
+
+  font: 800 0.78rem/1 monospace;
+}
+
+.descent-link span {
+  color: var(--rust);
+}
+
+
+/* ============================================================
+   CRÔNICA DE VEYR
+============================================================ */
+
+.chronicle {
+  display: grid;
+  place-items: center;
+
+  padding: clamp(2rem, 7vw, 7rem);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(203, 189, 152, 0.08),
+      transparent 60%
+    ),
+    #0d0c0a;
+}
+
+.chronicle::before {
+  content: attr(data-folio);
+
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+
+  color: #504a3c;
+
+  font: 700 0.67rem/1 monospace;
+  letter-spacing: 0.25em;
+
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.chronicle-sheet {
+  position: relative;
+
+  width: min(900px, 100%);
+
+  padding:
+    clamp(4rem, 8vw, 7rem)
+    clamp(2rem, 7vw, 6.5rem);
+
+  color: var(--ink);
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.06),
+      rgba(0, 0, 0, 0.08)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 5px,
+      rgba(75, 55, 25, 0.018) 6px
+    ),
+    var(--paper);
+
+  border: 1px solid #756847;
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 0 70px rgba(76, 49, 20, 0.18);
+}
+
+.chronicle-sheet::before,
+.chronicle-sheet::after {
+  content: "";
+
+  position: absolute;
+
+  pointer-events: none;
+}
+
+.chronicle-sheet::before {
+  inset: 18px;
+
+  border: 1px solid rgba(80, 62, 34, 0.45);
+}
+
+.chronicle-sheet::after {
+  inset: 28px;
+
+  border: 1px solid rgba(80, 62, 34, 0.16);
+}
+
+.royal-crest {
+  position: relative;
+
+  width: 120px;
+
+  display: grid;
+  justify-items: center;
+
+  margin: 0 auto 2rem;
+
+  color: var(--blood-dark);
+}
+
+.crest-crown {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.crest-shield {
+  width: 64px;
+  height: 76px;
+
+  display: grid;
+  place-items: center;
+
+  margin-top: -4px;
+
+  border: 3px double currentColor;
+  border-radius: 50% 50% 45% 45% / 25% 25% 70% 70%;
+
+  font:
+    700 2rem/1
+    Georgia,
+    serif;
+}
+
+.crest-flourish {
+  margin-top: -0.25rem;
+  font-size: 2rem;
+}
+
+.document-origin {
+  margin: 0;
+
+  text-align: center;
+
+  color: var(--blood-dark);
+
+  font:
+    700 0.72rem/1.4
+    Georgia,
+    serif;
+
+  letter-spacing: 0.2em;
+}
+
+.chronicle h2 {
+  max-width: 700px;
+
+  margin: 0.7rem auto 1rem;
+
+  text-align: center;
+
+  color: var(--ink);
+
+  font-family:
+    "Palatino Linotype",
+    Palatino,
+    "Book Antiqua",
+    Georgia,
+    serif;
+
+  font-size: clamp(2.7rem, 6vw, 5.4rem);
+  letter-spacing: -0.04em;
+}
+
+.document-note {
+  max-width: 570px;
+
+  margin: 0 auto 2rem;
+
+  text-align: center;
+
+  color: var(--ink-soft);
+
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.chronicle-rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  margin: 2rem 0 3rem;
+
+  color: var(--blood-dark);
+}
+
+.chronicle-rule::before,
+.chronicle-rule::after {
+  content: "";
+
+  height: 1px;
+
+  flex: 1;
+
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.chronicle-sheet > p:not(.document-origin):not(.document-note) {
+  max-width: 68ch;
+
+  margin: 1.5rem auto;
+
+  font-size: clamp(1.03rem, 1.7vw, 1.18rem);
+  line-height: 1.85;
+}
+
+.dropcap::first-letter {
+  float: left;
+
+  margin:
+    0.1em
+    0.13em
+    -0.1em
+    0;
+
+  color: var(--blood-dark);
+
+  font-family:
+    "Palatino Linotype",
+    Georgia,
+    serif;
+
+  font-size: 5.2rem;
+  line-height: 0.72;
+}
+
+.document-signature {
+  max-width: 68ch;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+
+  margin: 3.5rem auto 0;
+  padding-top: 1rem;
+
+  border-top: 1px solid rgba(53, 42, 24, 0.35);
+
+  color: var(--ink-soft);
+
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.document-signature strong {
+  color: var(--blood-dark);
+
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+
+/* cantos ornamentais */
+
+.page-corner {
+  position: absolute;
+
+  width: 90px;
+  height: 90px;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+.page-corner::before,
+.page-corner::after {
+  content: "";
+
+  position: absolute;
+
+  background: #68593a;
+  opacity: 0.45;
+}
+
+.page-corner::before {
+  width: 70px;
+  height: 1px;
+}
+
+.page-corner::after {
+  width: 1px;
+  height: 70px;
+}
+
+.page-corner-top-left {
+  top: 3rem;
+  left: 3rem;
+}
+
+.page-corner-top-right {
+  top: 3rem;
+  right: 3rem;
+
+  transform: rotate(90deg);
+}
+
+.page-corner-bottom-left {
+  bottom: 3rem;
+  left: 3rem;
+
+  transform: rotate(-90deg);
+}
+
+.page-corner-bottom-right {
+  right: 3rem;
+  bottom: 3rem;
+
+  transform: rotate(180deg);
+}
+
+
+/* ============================================================
+   MOSTEIRO
+============================================================ */
+
+.monastery {
+  display: grid;
+  place-items: center;
+
+  padding: clamp(2rem, 7vw, 7rem);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(91, 35, 28, 0.08),
+      transparent 20% 80%,
+      rgba(91, 35, 28, 0.08)
+    ),
+    #16130f;
+}
+
+.monastery-sheet {
+  position: relative;
+
+  width: min(1050px, 100%);
+
+  padding:
+    clamp(3rem, 7vw, 6rem)
+    clamp(2rem, 6vw, 5rem);
+
+  color: #282018;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(69, 47, 24, 0.025) 0 1px,
+      transparent 1px 7px
+    ),
+    #d3c5a0;
+
+  border:
+    14px solid
+    #1d1812;
+
+  outline: 1px solid #6a5b3d;
+
+  box-shadow:
+    inset 0 0 90px rgba(48, 31, 13, 0.25),
+    0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.monastery-sheet::before {
+  content: "";
+
+  position: absolute;
+  inset: 14px;
+
+  border: 3px double rgba(85, 62, 32, 0.55);
+
+  pointer-events: none;
+}
+
+.monastery-heading {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  margin-bottom: 1rem;
+}
+
+.monastery-symbol {
+  width: 80px;
+  height: 80px;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--blood-dark);
+
+  border: 2px solid var(--blood-dark);
+  border-radius: 50%;
+
+  font-size: 2.7rem;
+}
+
+.monastery h2 {
+  margin: 0.2rem 0 0;
+
+  color: #241c15;
+
+  font-family:
+    "Palatino Linotype",
+    Palatino,
+    Georgia,
+    serif;
+
+  font-size: clamp(2.5rem, 6vw, 5rem);
+}
+
+.monastery .document-origin {
+  text-align: left;
+}
+
+.monastery-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: clamp(2rem, 6vw, 5rem);
+
+  max-width: 830px;
+
+  margin: 3rem auto 0;
+}
+
+.monastery-sheet > p:not(.document-note),
+.monastery-columns p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.monastery-sheet > p:not(.document-note) {
+  max-width: 830px;
+
+  margin: 1.5rem auto;
+}
+
+.monastery-margin-note {
+  align-self: start;
+
+  padding: 1.5rem 0 1.5rem 1.4rem;
+
+  border-left: 1px solid rgba(91, 35, 28, 0.45);
+
+  color: var(--blood-dark);
+
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 0.93rem;
+  font-style: italic;
+
+  transform: rotate(1.3deg);
+}
+
+.margin-cross {
+  display: block;
+
+  margin-bottom: 0.8rem;
+
+  font-size: 1.5rem;
+}
+
+.monastery-margin-note p {
+  margin: 0 0 1rem;
+
+  line-height: 1.55;
+}
+
+.scribble {
+  font-size: 1.15rem !important;
+  font-weight: 700;
+}
+
+.monastery-warning {
+  max-width: 830px;
+
+  margin: 3rem auto 0;
+  padding: 1.3rem 1.5rem;
+
+  border-block: 1px solid rgba(91, 35, 28, 0.55);
+
+  color: var(--blood-dark);
+
+  text-align: center;
+
+  font-size: 0.86rem;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.wax-seal {
+  width: 78px;
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  margin: 3rem auto 0;
+
+  border: 8px double #4f1e19;
+  border-radius: 48% 52% 45% 55%;
+
+  background: var(--blood);
+
+  box-shadow:
+    inset 0 0 0 2px #2f1110,
+    0 5px 7px rgba(0, 0, 0, 0.25);
+
+  color: #b77c69;
+
+  font:
+    700 1.2rem/1
+    Georgia,
+    serif;
+
+  transform: rotate(-6deg);
+}
+
+
+/* ============================================================
+   LIMIAR / ARCHEOLOGY HORROR ORIGINAL
+============================================================ */
+
+.threshold {
+  min-height: 100svh;
+
+  display: grid;
+  grid-template-columns: 170px 1fr;
+
+  border-block: 1px solid var(--line);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 0 1px,
+      transparent 1px 31px
+    ),
+    var(--black);
+}
+
+.depth-index {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 2rem 1.5rem;
+
+  border-right: 1px solid var(--line);
+
+  color: var(--ash);
+
+  font: 800 0.72rem/1 monospace;
+
+  writing-mode: vertical-rl;
+}
+
+.threshold article {
+  max-width: 900px;
+
+  padding: 8vw 6vw;
+}
+
+.threshold article > p:not(.eyebrow):not(.result) {
+  max-width: 62ch;
+
+  font-size: 1.15rem;
+  line-height: 1.65;
+}
+
+.threshold em {
+  color: #c8bea9;
+}
+
+.puzzle {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 0.5rem;
+
+  margin: 3rem 0 1rem;
+}
+
+.rune {
+  aspect-ratio: 1;
+
+  border: 1px solid #504a40;
+
+  background:
+    radial-gradient(
+      circle,
+      #1d1b16,
+      #11110f
+    );
+
+  color: var(--bone);
+
+  font-size: clamp(2rem, 5vw, 4rem);
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.rune:hover,
+.rune.selected {
+  border-color: var(--bone);
+
+  background: var(--bone);
+  color: var(--black);
+
+  transform: translateY(-2px);
+}
+
+.sequence {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1rem 0;
+
+  border-block: 1px solid var(--line);
+
+  font: 800 0.8rem/1 monospace;
+}
+
+.puzzle-actions {
+  display: flex;
+  gap: 0.6rem;
+
+  margin: 1rem 0;
+}
+
+.puzzle-actions button,
+.relic button {
+  padding: 0.8rem 1rem;
+
+  border: 1px solid var(--bone);
+
+  background: transparent;
+  color: var(--bone);
+
+  font: 800 0.75rem/1 monospace;
+
+  cursor: pointer;
+
+  transition: 0.18s ease;
+}
+
+.puzzle-actions button:hover,
+.relic button:hover {
+  background: var(--bone);
+  color: var(--black);
+}
+
+.puzzle-actions button:last-child {
+  background: var(--bone);
+  color: var(--black);
+}
+
+.puzzle-actions button:last-child:hover {
+  background: transparent;
+  color: var(--bone);
+}
+
+.result {
+  min-height: 3rem;
+
+  padding-left: 1rem;
+
+  border-left: 3px solid var(--rust);
+
+  color: var(--ash);
+
+  font-style: italic;
+}
+
+
+/* ============================================================
+   CADERNO DE EXPEDIÇÃO
+============================================================ */
+
+.expedition {
+  display: grid;
+  place-items: center;
+
+  padding: clamp(2rem, 6vw, 6rem);
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 39px,
+      #29251e 40px
+    ),
+    #161410;
+}
+
+.field-journal {
+  position: relative;
+
+  width: min(1100px, 100%);
+
+  padding:
+    clamp(2rem, 6vw, 5rem);
+
+  overflow: hidden;
+
+  color: #beb4a0;
+
+  border:
+    1px solid
+    #454035;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(110, 47, 39, 0.05),
+      transparent 15% 85%,
+      rgba(110, 47, 39, 0.05)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 31px,
+      rgba(216, 207, 186, 0.045) 32px
+    ),
+    #191813;
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.field-journal::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 70px;
+
+  width: 1px;
+
+  background: rgba(111, 47, 39, 0.45);
+}
+
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: start;
+
+  margin-bottom: 1rem;
+}
+
+.journal-header h2 {
+  margin-bottom: 0;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: clamp(2.7rem, 6vw, 5.4rem);
+}
+
+.journal-id {
+  display: grid;
+  gap: 0.3rem;
+
+  padding: 0.8rem 1rem;
+
+  border: 1px solid #4a453b;
+
+  font-family: monospace;
+
+  text-align: right;
+}
+
+.journal-id span {
+  color: var(--bone);
+  font-weight: 800;
+}
+
+.journal-id small {
+  color: var(--ash);
+}
+
+.journal-description {
+  max-width: 700px;
+
+  margin: 0 0 4rem;
+
+  color: var(--ash);
+
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.journal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 3rem 4rem;
+}
+
+.journal-entry {
+  position: relative;
+
+  padding-left: 1.4rem;
+
+  border-left: 1px solid #403c33;
+}
+
+.journal-entry time {
+  display: inline-block;
+
+  margin-bottom: 1rem;
+
+  color: var(--rust);
+
+  font:
+    800 0.75rem/1
+    monospace;
+
+  letter-spacing: 0.12em;
+}
+
+.journal-entry p {
+  margin: 0 0 1.2rem;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 0.97rem;
+  line-height: 1.75;
+}
+
+.damaged-entry::after {
+  content: "";
+
+  position: absolute;
+  right: -1rem;
+  bottom: -1.5rem;
+
+  width: 120px;
+  height: 55px;
+
+  background:
+    repeating-linear-gradient(
+      -12deg,
+      transparent 0 5px,
+      rgba(111, 47, 39, 0.18) 6px 7px
+    );
+
+  transform: rotate(-6deg);
+
+  pointer-events: none;
+}
+
+.last-entry {
+  transform: rotate(-0.3deg);
+}
+
+.journal-sketch {
+  position: relative;
+
+  width: min(360px, 100%);
+
+  margin:
+    4rem
+    0
+    0
+    auto;
+
+  padding: 1.5rem;
+
+  border: 1px dashed #534d40;
+
+  color: var(--ash);
+
+  font:
+    0.8rem/1.5
+    "Courier New",
+    monospace;
+
+  transform: rotate(1.5deg);
+}
+
+.sketch-map {
+  position: relative;
+
+  height: 150px;
+
+  margin-bottom: 1rem;
+
+  background:
+    linear-gradient(
+      30deg,
+      transparent 49%,
+      #5f584a 50% 51%,
+      transparent 52%
+    ),
+    linear-gradient(
+      -20deg,
+      transparent 49%,
+      #5f584a 50% 51%,
+      transparent 52%
+    );
+}
+
+.sketch-node {
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #776f5f;
+  border-radius: 50%;
+}
+
+.node-a {
+  top: 15%;
+  left: 10%;
+}
+
+.node-b {
+  top: 55%;
+  left: 30%;
+}
+
+.node-c {
+  top: 25%;
+  right: 25%;
+}
+
+.node-d {
+  right: 8%;
+  bottom: 5%;
+}
+
+
+/* ============================================================
+   RELÍQUIA
+============================================================ */
+
+.relic {
+  padding:
+    clamp(5rem, 9vw, 9rem)
+    6vw;
+
+  background:
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(111, 47, 39, 0.14),
+      transparent 35%
+    ),
+    var(--bone);
+
+  color: var(--black);
+}
+
+.relic .eyebrow {
+  color: #4f4a42;
+}
+
+.relic h2 {
+  max-width: 1000px;
+}
+
+.relic button {
+  border-color: var(--black);
+
+  color: var(--black);
+}
+
+.relic button:hover {
+  background: var(--black);
+  color: var(--bone);
+}
+
+.relic output {
+  display: block;
+
+  max-width: 760px;
+
+  margin-top: 1.4rem;
+  padding-left: 1rem;
+
+  border-left: 3px solid var(--rust);
+
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   MERIDIAN
+============================================================ */
+
+.meridian {
+  display: grid;
+  place-items: center;
+
+  padding: clamp(2rem, 6vw, 6rem);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 47px,
+      rgba(216, 207, 186, 0.025) 48px
+    ),
+    #0e0e0c;
+}
+
+.meridian-record {
+  width: min(1150px, 100%);
+
+  border: 1px solid #49453d;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(111, 47, 39, 0.08),
+      transparent 25% 75%,
+      rgba(111, 47, 39, 0.08)
+    ),
+    #171713;
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.meridian-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 3rem;
+
+  padding:
+    clamp(2rem, 5vw, 4rem);
+
+  border-bottom: 1px solid #49453d;
+}
+
+.meridian-header h2 {
+  margin-bottom: 0;
+}
+
+.classification {
+  display: grid;
+  gap: 0.35rem;
+
+  min-width: 220px;
+
+  color: var(--ash);
+
+  font:
+    700 0.68rem/1.4
+    monospace;
+
+  text-align: right;
+}
+
+.classification span {
+  padding-bottom: 0.3rem;
+
+  border-bottom: 1px solid #35322c;
+}
+
+.artifact-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.artifact-diagram {
+  position: relative;
+
+  min-height: 650px;
+
+  display: grid;
+  place-items: center;
+
+  border-right: 1px solid #49453d;
+
+  overflow: hidden;
+}
+
+.artifact-circle {
+  position: absolute;
+
+  border: 1px solid #6c6659;
+  border-radius: 50%;
+}
+
+.artifact-circle-1 {
+  width: 270px;
+  aspect-ratio: 1;
+}
+
+.artifact-circle-2 {
+  width: 195px;
+  aspect-ratio: 1;
+
+  border-style: dashed;
+}
+
+.artifact-circle-3 {
+  width: 95px;
+  aspect-ratio: 1;
+
+  border-color: var(--rust);
+}
+
+.artifact-circle-1::before,
+.artifact-circle-1::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  background: #6c6659;
+
+  transform: translate(-50%, -50%);
+}
+
+.artifact-circle-1::before {
+  width: 360px;
+  height: 1px;
+}
+
+.artifact-circle-1::after {
+  width: 1px;
+  height: 360px;
+}
+
+.artifact-mark {
+  position: absolute;
+
+  color: var(--ash);
+
+  font:
+    1.4rem/1
+    monospace;
+}
+
+.mark-a {
+  top: 20%;
+  left: 20%;
+}
+
+.mark-b {
+  top: 28%;
+  right: 15%;
+}
+
+.mark-c {
+  bottom: 28%;
+  left: 18%;
+}
+
+.mark-d {
+  right: 20%;
+  bottom: 17%;
+}
+
+.artifact-diagram small {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.2rem;
+
+  color: var(--ash);
+
+  font-family: monospace;
+}
+
+.artifact-text {
+  padding:
+    clamp(2rem, 5vw, 4rem);
+
+  color: #bcb3a2;
+}
+
+.artifact-text p {
+  max-width: 66ch;
+
+  margin: 0 0 1.7rem;
+
+  font-size: 1.03rem;
+  line-height: 1.75;
+}
+
+.artifact-note {
+  max-width: 470px;
+
+  margin: 2.5rem 0;
+  padding: 1rem 1.3rem;
+
+  border-left: 3px solid var(--rust);
+
+  color: var(--ash);
+
+  font:
+    700 0.85rem/1.55
+    monospace;
+}
+
+.translation-block {
+  display: grid;
+  gap: 1rem;
+
+  padding:
+    clamp(3rem, 7vw, 6rem);
+
+  border-block: 1px solid #49453d;
+
+  background: #d3c9b2;
+  color: var(--black);
+}
+
+.translation-block span {
+  font:
+    800 0.7rem/1
+    monospace;
+
+  letter-spacing: 0.16em;
+}
+
+.translation-block strong {
+  font:
+    400 clamp(3rem, 8vw, 7rem) / 0.9
+    Georgia,
+    serif;
+
+  letter-spacing: -0.055em;
+}
+
+.meridian-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding:
+    1.4rem
+    clamp(2rem, 5vw, 4rem);
+
+  color: var(--ash);
+
+  font:
+    700 0.72rem/1
+    monospace;
+}
+
+.meridian-footer p {
+  margin: 0;
+}
+
+.catalog-code {
+  color: var(--rust);
+}
+
+
+/* ============================================================
+   DOWNLOADS
+============================================================ */
+
+.downloads {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  background: var(--black);
+}
+
+.downloads a {
+  min-height: 180px;
+
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.6rem;
+
+  padding: 1rem;
+
+  border-right: 1px solid var(--line);
+
+  color: var(--bone);
+
+  font:
+    800 0.75rem/1.3
+    monospace;
+
+  text-align: center;
+
+  text-decoration: none;
+}
+
+.downloads a:hover {
+  background: #191813;
+}
+
+.downloads span {
+  font-size: 0.85rem;
+}
+
+.downloads small {
+  color: var(--ash);
+}
+
+.downloads strong {
+  color: var(--rust);
+
+  font-size: 0.68rem;
+}
+
+
+/* ============================================================
+   RESPONSIVIDADE
+============================================================ */
+
+@media (max-width: 900px) {
+
+  .monastery-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .monastery-margin-note {
+    max-width: 450px;
+
+    border-left: 0;
+    border-top: 1px solid rgba(91, 35, 28, 0.45);
+
+    padding:
+      1.3rem
+      0
+      0;
+  }
+
+  .journal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .artifact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .artifact-diagram {
+    min-height: 500px;
+
+    border-right: 0;
+    border-bottom: 1px solid #49453d;
+  }
+
+}
+
+
+@media (max-width: 720px) {
+
+  .site-header {
+    align-items: start;
+
+    font-size: 0.62rem;
+    line-height: 1.35;
+  }
+
+  .site-header span {
+    text-align: right;
+  }
+
+  .threshold {
+    grid-template-columns: 1fr;
+  }
+
+  .depth-index {
+    flex-direction: row;
+
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+
+    writing-mode: horizontal-tb;
+  }
+
+  .puzzle {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chronicle {
+    padding:
+      2rem
+      1rem;
+  }
+
+  .chronicle::before {
+    display: none;
+  }
+
+  .chronicle-sheet {
+    padding:
+      4rem
+      1.7rem;
+  }
+
+  .chronicle-sheet::before {
+    inset: 10px;
+  }
+
+  .chronicle-sheet::after {
+    inset: 16px;
+  }
+
+  .page-corner {
+    display: none;
+  }
+
+  .document-signature {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .monastery {
+    padding:
+      2rem
+      1rem;
+  }
+
+  .monastery-sheet {
+    padding:
+      3rem
+      1.7rem;
+
+    border-width: 8px;
+  }
+
+  .monastery-heading {
+    display: grid;
+
+    justify-items: center;
+
+    text-align: center;
+  }
+
+  .monastery .document-origin {
+    text-align: center;
+  }
+
+  .monastery-symbol {
+    width: 65px;
+    height: 65px;
+  }
+
+  .field-journal {
+    padding:
+      3rem
+      1.5rem;
+  }
+
+  .field-journal::before {
+    left: 18px;
+  }
+
+  .journal-header {
+    display: grid;
+  }
+
+  .journal-id {
+    justify-self: start;
+
+    text-align: left;
+  }
+
+  .artifact-diagram {
+    min-height: 420px;
+  }
+
+  .artifact-circle-1 {
+    width: 220px;
+  }
+
+  .artifact-circle-2 {
+    width: 155px;
+  }
+
+  .artifact-circle-3 {
+    width: 70px;
+  }
+
+  .artifact-circle-1::before {
+    width: 280px;
+  }
+
+  .artifact-circle-1::after {
+    height: 280px;
+  }
+
+  .meridian-header {
+    display: grid;
+  }
+
+  .classification {
+    text-align: left;
+  }
+
+  .translation-block strong {
+    font-size: clamp(2.8rem, 14vw, 5rem);
+  }
+
+  .downloads {
+    grid-template-columns: 1fr;
+  }
+
+  .downloads a {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+}

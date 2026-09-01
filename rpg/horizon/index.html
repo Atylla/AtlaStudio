@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Terminal de bordo da ORPHEUS — Project Horizon."
+  >
+
+  <title>Project Horizon — AtlaStudios RPG</title>
+
+  <link rel="stylesheet" href="horizon.css">
+  <script src="horizon.js" defer></script>
+</head>
+
+<body>
+  <div class="screen">
+
+    <header>
+      <span>HORIZON OS / 0.9.13</span>
+      <span>LINK: INSTÁVEL</span>
+      <span id="clock">--:--:--</span>
+    </header>
+
+    <main>
+
+      <section class="identity">
+        <a href="../../" id="esc-retornar">[ESC]</a>
+
+        <div class="identity-block">
+          <p>VESSEL NODE</p>
+          <span>HZN-04</span>
+        </div>
+
+        <h1>ORPHEUS</h1>
+
+        <p class="warning">
+          CONEXÃO DEGRADADA<br>
+          RESPOSTA DA TRIPULAÇÃO: NENHUMA
+        </p>
+
+        <div class="ship-data">
+          <span>MISSÃO</span>
+          <strong>PROJECT HORIZON</strong>
+
+          <span>STATUS</span>
+          <strong class="danger">DESCONHECIDO</strong>
+
+          <span>ÚLTIMO CONTATO</span>
+          <strong>██/██/████</strong>
+        </div>
+      </section>
+
+
+      <section class="terminal" aria-label="Terminal da nave ORPHEUS">
+
+        <div
+          id="terminal-output"
+          class="terminal-output"
+          aria-live="polite"
+          aria-atomic="false"
+        ></div>
+
+        <form id="terminal-form" autocomplete="off">
+
+          <label for="command">
+            HZN-04&gt;
+          </label>
+
+          <input
+            id="command"
+            name="command"
+            type="text"
+            autofocus
+            spellcheck="false"
+            aria-label="Digite um comando"
+          >
+
+        </form>
+
+      </section>
+
+
+      <aside class="help">
+
+        <strong>COMANDOS DE SISTEMA</strong>
+
+        <span>help</span>
+        <span>status</span>
+        <span>logs</span>
+        <span>open [id]</span>
+        <span>scan</span>
+        <span>crew</span>
+        <span>signal</span>
+        <span>probe</span>
+        <span>download</span>
+        <span>clear</span>
+
+        <div class="help-note">
+          <span>HORIZON OS</span>
+          <p>
+            Alguns subsistemas podem não estar documentados.
+          </p>
+        </div>
+
+      </aside>
+
+    </main>
+
+  </div>
+</body>
+</html>
