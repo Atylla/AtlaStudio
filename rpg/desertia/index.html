@@ -1,1188 +1,1527 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Desertia — AtlaStudioRPG</title>
+    <title>Desertia — AtlaStudioRPG</title>
 
-  <link rel="stylesheet" href="desertia.css">
-  <script src="desertia.js" defer></script>
-</head>
+    <link rel="stylesheet" href="desertia.css" />
+    <script src="desertia.js" defer></script>
+  </head>
 
-<body>
+  <body>
+    <header>
+      <a href="../../">← ESTÚDIO</a>
 
-  <header>
-    <a href="../../">← ESTÚDIO</a>
+      <span>FM 106.6 / DESERTIA</span>
 
-    <span>FM 106.6 / DESERTIA</span>
-
-    <div class="header-heat">
-      <span>HEAT</span>
-      <div class="heat-mini">
-        <div id="heat-mini-fill"></div>
+      <div class="header-heat">
+        <span>HEAT</span>
+        <div class="heat-mini">
+          <div id="heat-mini-fill"></div>
+        </div>
+        <strong id="heat-mini-value">18%</strong>
       </div>
-      <strong id="heat-mini-value">18%</strong>
-    </div>
-  </header>
+    </header>
 
-  <main>
+    <main>
+      <!-- HERO -->
 
-    <!-- HERO -->
+      <!-- HERO -->
 
-    <section class="hero">
-
-      <div class="hero-copy">
-
-        <p class="stamp">LIVE FROM NOWHERE</p>
-
-        <h1>DESERTIA</h1>
-
-        <p class="tagline">
-          A estrada já acabou. A banda continuou dirigindo.
-        </p>
-
-        <button id="tune-in" class="hero-button" type="button">
-          SINTONIZAR 106.6 FM
-        </button>
-
-      </div>
-
-      <div class="hero-warning">
-        <span>SINAL RECEBIDO</span>
-        <strong>+50 ANOS</strong>
-      </div>
-
-    </section>
-
-
-    <!-- RADIO -->
-
-    <section class="radio-section" id="radio">
-
-      <div class="section-title">
-
-        <p class="kicker">TRANSMISSÃO / NÃO AUTORIZADA</p>
-
-        <h2>THE LAST RADIO</h2>
-
-        <p>
-          A antena não deveria alcançar tão longe.
-          Muito menos tão longe no tempo.
-        </p>
-
-      </div>
-
-
-      <div class="radio">
-
-        <div class="radio-top">
-
-          <div>
-            <span>DESERTIA MOTOR RADIO</span>
-            <small>LONG RANGE RECEIVER</small>
-          </div>
-
-          <span class="radio-light"></span>
-
-        </div>
-
-
-        <div class="radio-screen">
-
-          <small>FM</small>
-
-          <strong id="frequency-display">
-            106.6
-          </strong>
-
-          <span>MHz</span>
-
-        </div>
-
-
-        <div class="signal-meter">
-
-          <span>SIGNAL</span>
-
-          <div class="signal-bars" id="signal-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-          </div>
-
-        </div>
-
-
-        <div class="radio-controls">
-
-          <button id="freq-down" type="button">
-            ◀ SEEK
-          </button>
-
-          <button id="freq-up" type="button">
-            SEEK ▶
-          </button>
-
-        </div>
-
-
-        <div class="radio-presets">
-
-          <button data-frequency="88.1">88.1</button>
-          <button data-frequency="92.4">92.4</button>
-          <button data-frequency="97.7">97.7</button>
-          <button data-frequency="103.3">103.3</button>
-          <button data-frequency="106.6">106.6</button>
-          <button data-frequency="107.9">107.9</button>
-
-        </div>
-
-
-        <div class="transmission">
-
-          <p class="kicker">
-            RECEIVED TRANSMISSION
-          </p>
-
-          <strong id="transmission-title">
-            THE LAST STATIC
-          </strong>
-
-          <p id="transmission-text">
-            Música distorcida atravessa a estática.
-            Cinco pessoas discutem ao fundo.
-            Alguém manda aumentar o volume.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- HEAT -->
-
-    <section class="heat-section">
-
-      <div>
-
-        <p class="kicker">
-          ENGINE / ENVIRONMENT / BAD DECISIONS
-        </p>
-
-        <h2>HEAT</h2>
-
-      </div>
-
-
-      <div class="heat-system">
-
-        <div class="heat-readout">
-
-          <strong id="heat-value">
-            18%
-          </strong>
-
-          <span id="heat-status">
-            MOTOR ESTÁVEL
-          </span>
-
-        </div>
-
-
-        <div class="heat-bar">
-          <div id="heat-fill"></div>
-        </div>
-
-
-        <p id="heat-message">
-          Ainda dá para continuar dirigindo.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- ALBUM -->
-
-    <section class="record">
-
-      <div class="cover" aria-hidden="true">
-
-        <div class="sun"></div>
-
-        <div class="road"></div>
-
-        <strong>
-          THE<br>
-          LAST<br>
-          STATIC
-        </strong>
-
-      </div>
-
-
-      <div class="album">
-
-        <p class="kicker">
-          ARQUIVO / DSRT-001
-        </p>
-
-        <h2>
-          THE LAST STATIC
-        </h2>
-
-        <p>
-          Cinquenta anos após o fim do mundo, uma banda encontrou
-          uma estação de rádio capaz de transmitir para o passado.
-          Eles gravaram um EP e enviaram o sinal cem anos para trás.
-        </p>
-
-        <p>
-          <b>
-            Alguém recebeu a transmissão para que pudéssemos ouvir.
-          </b>
-        </p>
-
-
-        <ol
-          id="playlist"
-          class="playlist">
-        </ol>
-
-
-        <div class="player">
-
-          <button id="prev" type="button">
-            ◀
-          </button>
-
-          <button id="play" type="button">
-            PLAY
-          </button>
-
-          <button id="next" type="button">
-            ▶
-          </button>
-
-
-          <div>
-            <small>NOW PLAYING</small>
-            <strong id="now-playing">—</strong>
-          </div>
-
-        </div>
-
+      <section class="hero">
+        <div class="hero-sun" aria-hidden="true"></div>
 
         <div
-          id="audio-anomaly"
-          class="audio-anomaly"
-          hidden>
+          class="hero-mountains hero-mountains-back"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="hero-mountains hero-mountains-front"
+          aria-hidden="true"
+        ></div>
 
-          <small>
-            SIGNAL DETECTED INSIDE AUDIO
-          </small>
+        <div class="hero-horizon" aria-hidden="true"></div>
+
+        <div class="hero-road" aria-hidden="true">
+          <div class="road-stripe"></div>
+        </div>
+
+        <div class="hero-signal">
+          <span> DESERTIA BROADCAST NETWORK </span>
+
+          <strong> 106.6 FM </strong>
+        </div>
+
+        <div class="hero-copy">
+          <div class="hero-meta">
+            <p class="stamp">LIVE FROM NOWHERE</p>
+
+            <span> TRANSMISSION / +50 YEARS </span>
+          </div>
+
+          <h1>DESERTIA</h1>
+
+          <div class="hero-bottom">
+            <p class="tagline">
+              A estrada já acabou.<br />
+              A banda continuou dirigindo.
+            </p>
+
+            <button id="tune-in" class="hero-button" type="button">
+              <span> RECEBER TRANSMISSÃO </span>
+
+              <strong> SINTONIZAR 106.6 FM → </strong>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-coordinate">
+          <span> LAT ████.██ </span>
+
+          <span> LONG ████.██ </span>
+
+          <strong> LOCATION UNKNOWN </strong>
+        </div>
+      </section>
+
+      <!-- RADIO -->
+      <section class="radio-section" id="radio">
+        <div class="section-title">
+          <p class="kicker">TRANSMISSÃO / NÃO AUTORIZADA</p>
+
+          <h2>THE LAST RADIO</h2>
+
+          <p>
+            A antena não deveria alcançar tão longe. Muito menos tão longe no
+            tempo.
+          </p>
+
+          <p class="radio-instruction">
+            Gire o sintonizador. Algumas frequências ainda estão transmitindo.
+          </p>
+        </div>
+
+        <div class="radio">
+          <div class="radio-top">
+            <div>
+              <span>DESERTIA MOTOR RADIO</span>
+              <small>LONG RANGE RECEIVER / FM</small>
+            </div>
+
+            <span class="radio-light"></span>
+          </div>
+
+          <div class="radio-dial">
+            <div class="frequency-scale">
+              <span>88</span>
+              <span>92</span>
+              <span>96</span>
+              <span>100</span>
+              <span>104</span>
+              <span>108</span>
+            </div>
+
+            <div class="frequency-line">
+              <div id="frequency-needle" class="frequency-needle"></div>
+            </div>
+          </div>
+
+          <div class="radio-screen">
+            <small>FM</small>
+
+            <strong id="frequency-display"> 106.6 </strong>
+
+            <span>MHz</span>
+          </div>
+
+          <div class="radio-bottom">
+            <div class="signal-area">
+              <span class="signal-label"> SIGNAL </span>
+
+              <div class="signal-bars" id="signal-bars">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+
+              <span id="signal-status" class="signal-status"> SEARCHING </span>
+            </div>
+
+            <div class="tuner-area">
+              <div
+                id="radio-knob"
+                class="radio-knob"
+                role="slider"
+                tabindex="0"
+                aria-label="Sintonizador FM"
+                aria-valuemin="87.5"
+                aria-valuemax="108"
+                aria-valuenow="106.6"
+              >
+                <div class="knob-marker"></div>
+              </div>
+
+              <span> TUNING </span>
+            </div>
+          </div>
+
+          <div class="transmission">
+            <p class="kicker">RECEIVED TRANSMISSION</p>
+
+            <strong id="transmission-title"> THE LAST STATIC </strong>
+
+            <p id="transmission-text">Uma transmissão atravessa a estática.</p>
+          </div>
+
+          <audio id="radio-audio" preload="auto"></audio>
+        </div>
+      </section>
+
+      <!-- HEAT -->
+
+      <section class="heat-section">
+        <div class="heat-heading">
+          <p class="kicker">ENGINE / ENVIRONMENT / BAD DECISIONS</p>
+
+          <h2>HEAT</h2>
+
+          <p>
+            A Desert Rat ainda está funcionando. Ninguém sabe exatamente por
+            quê.
+          </p>
+        </div>
+
+        <div class="heat-system">
+          <div class="heat-readout">
+            <div>
+              <small>ENGINE TEMPERATURE</small>
+
+              <strong id="heat-value"> 18% </strong>
+            </div>
+
+            <span id="heat-status"> MOTOR ESTÁVEL </span>
+          </div>
+
+          <div class="heat-bar">
+            <div id="heat-fill"></div>
+
+            <div class="heat-danger-line heat-danger-60"></div>
+            <div class="heat-danger-line heat-danger-80"></div>
+          </div>
+
+          <div class="heat-scale">
+            <span>COLD</span>
+            <span>60</span>
+            <span>80</span>
+            <span>REDLINE</span>
+          </div>
+
+          <p id="heat-message">Ainda dá para continuar dirigindo.</p>
+
+          <!-- ENGINE CONTROLS -->
+
+          <div class="engine-controls">
+            <div class="throttle-control">
+              <div class="control-header">
+                <div>
+                  <small>THROTTLE</small>
+
+                  <strong id="throttle-label"> IDLE </strong>
+                </div>
+
+                <div class="engine-data">
+                  <span>
+                    SPEED
+                    <strong id="speed-value"> 0 KM/H </strong>
+                  </span>
+
+                  <span>
+                    LOAD
+                    <strong id="load-value"> 0% </strong>
+                  </span>
+                </div>
+              </div>
+
+              <input
+                id="throttle"
+                class="throttle"
+                type="range"
+                min="0"
+                max="5"
+                step="1"
+                value="0"
+                aria-label="Acelerador da Desert Rat"
+              />
+
+              <div class="throttle-scale">
+                <span>IDLE</span>
+                <span>CRUISE</span>
+                <span>PUSH</span>
+                <span>HARD</span>
+                <span>FULL</span>
+                <span>REDLINE</span>
+              </div>
+            </div>
+
+            <div class="cooling-control">
+              <small>COOLING SYSTEM</small>
+
+              <button id="purge-radiator" type="button">PURGE RADIATOR</button>
+
+              <span id="radiator-status"> READY </span>
+            </div>
+          </div>
+
+          <output id="engine-event" class="engine-event">
+            Motor em marcha lenta.
+          </output>
+        </div>
+      </section>
+
+      <!-- ALBUM -->
+
+      <!-- ALBUM -->
+
+      <section class="record">
+        <div class="record-art">
+          <div class="cover" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="road"></div>
+
+            <span class="cover-code"> DSRT-001 </span>
+
+            <strong>
+              THE<br />
+              LAST<br />
+              STATIC
+            </strong>
+
+            <small> RECEIVED TRANSMISSION </small>
+          </div>
+
+          <div class="bootleg-stamp">BOOTLEG COPY / SOURCE UNKNOWN</div>
+        </div>
+
+        <div class="album">
+          <p class="kicker">ARQUIVO / DSRT-001</p>
+
+          <h2>THE LAST STATIC</h2>
+
+          <p>
+            Cinquenta anos após o fim do mundo, uma banda encontrou uma estação
+            de rádio capaz de transmitir para o passado. Eles gravaram um EP e
+            enviaram o sinal cem anos para trás.
+          </p>
+
+          <p>
+            <b> Alguém recebeu a transmissão para que pudéssemos ouvir. </b>
+          </p>
+
+          <!-- CASSETTE -->
+
+          <div id="cassette-player" class="cassette-player">
+            <div class="deck-header">
+              <span> DESERTIA AUDIO DECK </span>
+
+              <span id="deck-status"> TAPE READY </span>
+            </div>
+
+            <div class="cassette">
+              <div class="cassette-label">
+                <span> DESERTIA </span>
+
+                <strong> THE LAST STATIC </strong>
+
+                <small id="cassette-side"> SIDE A </small>
+              </div>
+
+              <div class="tape-window">
+                <div class="reel reel-left">
+                  <div class="reel-inner"></div>
+                </div>
+
+                <div class="tape-center">
+                  <span id="cassette-track-number"> 01 </span>
+                </div>
+
+                <div class="reel reel-right">
+                  <div class="reel-inner"></div>
+                </div>
+              </div>
+
+              <div class="cassette-bottom">
+                <span>TYPE I</span>
+                <span>60 MIN</span>
+                <span>NR OFF</span>
+              </div>
+            </div>
+
+            <!-- DISPLAY -->
+
+            <div class="track-display">
+              <div>
+                <small> NOW PLAYING </small>
+
+                <strong id="now-playing"> — </strong>
+
+                <span id="track-location"> TRANSMISSION SOURCE UNKNOWN </span>
+              </div>
+
+              <div class="time-display">
+                <strong id="current-time"> 00:00 </strong>
+
+                <span>/</span>
+
+                <span id="total-time"> 00:00 </span>
+              </div>
+            </div>
+
+            <!-- PROGRESS -->
+
+            <div class="progress-area">
+              <input
+                id="track-progress"
+                class="track-progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                step="0.1"
+                aria-label="Progresso da música"
+              />
+
+              <div class="progress-labels">
+                <span>00:00</span>
+                <span>TAPE COUNTER</span>
+                <span id="progress-duration"> 00:00 </span>
+              </div>
+            </div>
+
+            <!-- CONTROLS -->
+
+            <div class="deck-controls">
+              <div class="transport-controls">
+                <button id="prev" type="button" aria-label="Faixa anterior">
+                  ◀◀
+                </button>
+
+                <button id="play" class="play-button" type="button">
+                  ▶ PLAY
+                </button>
+
+                <button id="next" type="button" aria-label="Próxima faixa">
+                  ▶▶
+                </button>
+              </div>
+
+              <div class="volume-control">
+                <span> VOL </span>
+
+                <input
+                  id="music-volume"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="0.8"
+                  aria-label="Volume"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- TRACK INFORMATION -->
+
+          <div class="track-file">
+            <div>
+              <p class="kicker">TAPE NOTES</p>
+
+              <strong id="track-file-title"> BURN THE COUNTY LINE </strong>
+            </div>
+
+            <p id="track-file-text">
+              Gravada depois de uma noite particularmente ruim perto da
+              fronteira do Condado 6.
+            </p>
+          </div>
+
+          <!-- PLAYLIST -->
+
+          <div class="tracklist-header">
+            <span> TRACK LIST </span>
+
+            <span> DSRT-001 / SIDE A </span>
+          </div>
+
+          <ol id="playlist" class="playlist"></ol>
+
+          <!-- SECRET -->
+
+          <div id="audio-anomaly" class="audio-anomaly" hidden>
+            <small> ⚠ SIGNAL DETECTED INSIDE AUDIO </small>
+
+            <strong> "VOCÊS ESTÃO OUVINDO ISSO ANTES DE NÓS." </strong>
+
+            <span> SOURCE TIMESTAMP DOES NOT MATCH RECORDING </span>
+          </div>
+
+          <audio id="audio" preload="metadata"></audio>
+        </div>
+      </section>
+      <!-- BAND -->
+
+      <section class="band-heading">
+        <div>
+          <p class="kicker">FIVE PEOPLE / ONE BAD IDEA</p>
+
+          <h2>THE BAND</h2>
+        </div>
+
+        <div class="band-heading-copy">
+          <p>
+            Cinco sobreviventes, instrumentos barulhentos e decisões
+            questionáveis atravessando o fim do mundo.
+          </p>
 
           <strong>
-            "VOCÊS ESTÃO OUVINDO ISSO ANTES DE NÓS."
+            NÃO É UMA TURNÊ SE VOCÊ NÃO SABE ONDE VAI TOCAR AMANHÃ.
           </strong>
+        </div>
+      </section>
 
+      <!-- MEMBER 01 -->
+
+      <section class="band-member member-wine">
+        <div class="member-photo">
+          <img
+            src="assets/images/band/vocal-guitar.jpg"
+            alt="Vocalista e guitarrista da banda Desertia"
+          />
+
+          <span class="member-number"> 01 </span>
+
+          <span class="member-instrument"> VOCALS / GUITAR </span>
         </div>
 
-
-        <audio id="audio"></audio>
-
-      </div>
-
-    </section>
-
-
-    <!-- BAND -->
-
-    <section class="band-heading">
-
-      <p class="kicker">
-        FIVE PEOPLE / ONE BAD IDEA
-      </p>
-
-      <h2>THE BAND</h2>
-
-      <p>
-        Cinco sobreviventes, instrumentos barulhentos
-        e decisões questionáveis atravessando o fim do mundo.
-      </p>
-
-    </section>
-
-
-    <section class="band-info cor-band-1">
-
-      <div>
-
-        <p class="kicker">
-          NOME
-        </p>
-
-        <h2>
-          O QUE SE RECUSA A CALAR
-        </h2>
-
-      </div>
-
-
-      <div>
-
-        <p>
-          Um <b>Antigo</b> de cabelo cacheado, mullet e guitarra
-          sempre afogada em fuzz e overdrive.
-        </p>
-
-        <p>
-          Cresceu ouvindo histórias sobre um mundo que já não existe
-          e aprendeu que ainda há gente disposta a se reunir quando
-          escuta amplificadores ao longe.
-        </p>
-
-        <p>
-          <b>
-            Se ainda dá pra ouvir é porque ainda não acabou.
-          </b>
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <section class="band-info cor-band-2">
-
-      <div>
-
-        <p>
-          Baixinha, cabelo curto, mechas azuis e um baixo de cinco
-          cordas que soa mais como uma máquina industrial.
-        </p>
-
-        <p>
-          Ela entende como o <b>Deserto</b> funciona.
-          Munição, combustível e mantimentos valem mais que papel.
-        </p>
-
-        <p>
-          É quem mais presta atenção no que entra
-          e no que sai da banda.
-        </p>
-
-        <p>
-          <b>O BAIXO FALA POR ELA.</b>
-        </p>
-
-      </div>
-
-
-      <div>
-
-        <p class="kicker">
-          NOME
-        </p>
-
-        <h2>
-          CINCO CORDAS É MELHOR QUE QUATRO
-        </h2>
-
-      </div>
-
-    </section>
-
-
-    <section class="band-info cor-band-1">
-
-      <div>
-
-        <p class="kicker">
-          NOME
-        </p>
-
-        <h2>
-          SEMPRE DESTRÓI SUA BATERIA
-        </h2>
-
-      </div>
-
-
-      <div>
-
-        <p>
-          Cabelo laranja cobrindo os olhos, pouca conversa
-          e uma perna robótica montada com peças que ninguém
-          sabe mais de onde vieram.
-        </p>
-
-        <p>
-          O <b>Deserto</b> está cheio de tecnologia antiga,
-          sucata militar e coisas encontradas nas <b>Zonas</b>
-          que continuam funcionando sem ninguém entender direito.
-        </p>
-
-        <p>
-          <b>
-            Atrás da bateria parece querer destruir
-            o mundo pela segunda vez.
-          </b>
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <section class="band-info cor-band-3">
-
-      <div>
-
-        <p>
-          Velho, barbado, óculos pequenos e rachados.
-          Já perdeu gente demais para se impressionar com
-          monstros, mortos ou tempestades estranhas.
-        </p>
-
-        <p>
-          É quem conhece estrada, sabe quando uma cidade parece
-          errada e percebe quando o grupo está prestes a fazer
-          alguma idiotice.
-        </p>
-
-        <p>
-          <b>
-            Na estrada acabou virando o pai que ninguém pediu,
-            mas todo mundo precisava.
-          </b>
-        </p>
-
-      </div>
-
-
-      <div>
-
-        <p class="kicker">
-          NOME
-        </p>
-
-        <h2>
-          UM HOMEM SIMPLES
-        </h2>
-
-      </div>
-
-    </section>
-
-
-    <section class="band-info cor-band-2">
-
-      <div>
-
-        <p class="kicker">
-          NOME
-        </p>
-
-        <h2>
-          O ÚLTIMO PASSAGEIRO
-        </h2>
-
-      </div>
-
-
-      <div>
-
-        <p>
-          Último membro da banda a entrar.
-          Alto, magro, desengonçado e quieto.
-        </p>
-
-        <p>
-          Coleciona rádios, fitas, sintetizadores e peças
-          encontradas perto das Zonas e Fendas.
-        </p>
-
-        <p>
-          Foi ele que percebeu primeiro que aquela velha estação
-          não estava transmitindo para outro lugar.
-        </p>
-
-        <p>
-          <b>
-            Estava transmitindo para outro tempo.
-          </b>
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- ROAD -->
-
-    <section class="road-section">
-
-      <div class="section-title">
-
-        <p class="kicker">
-          ROUTE / UNKNOWN
-        </p>
-
-        <h2>THE ROAD</h2>
-
-        <p>
-          Não existe destino.
-          Só lugares onde ainda não deu tudo errado.
-        </p>
-
-      </div>
-
-
-      <div class="road-map">
-
-        <div class="map-line"></div>
-
-
-        <button
-          class="map-point"
-          data-location="gas-town"
-          style="--x: 13%; --y: 70%;">
-
-          <span>01</span>
-          GAS TOWN
-
-        </button>
-
-
-        <button
-          class="map-point"
-          data-location="red-mesa"
-          style="--x: 34%; --y: 43%;">
-
-          <span>02</span>
-          RED MESA
-
-        </button>
-
-
-        <button
-          class="map-point danger"
-          data-location="dead-valley"
-          style="--x: 54%; --y: 65%;">
-
-          <span>03</span>
-          DEAD VALLEY
-
-        </button>
-
-
-        <button
-          class="map-point"
-          data-location="crater-city"
-          style="--x: 73%; --y: 31%;">
-
-          <span>04</span>
-          CRATER CITY
-
-        </button>
-
-
-        <button
-          class="map-point unknown"
-          data-location="radio-station"
-          style="--x: 88%; --y: 58%;">
-
-          <span>?</span>
-          RADIO 106.6
-
-        </button>
-
-      </div>
-
-
-      <div class="location-file">
-
-        <p class="kicker">
-          CURRENT LOCATION
-        </p>
-
-        <h3 id="location-name">
-          GAS TOWN
-        </h3>
-
-        <div class="location-meta">
-
-          <span>
-            POPULAÇÃO:
-            <strong id="location-population">
-              312
-            </strong>
-          </span>
-
-          <span>
-            AMEAÇA:
-            <strong id="location-threat">
-              ●●○○○
-            </strong>
-          </span>
-
+        <div class="member-file">
+          <div class="member-header">
+            <div>
+              <p class="kicker">ANTIGO / VOCAL / GUITARRA</p>
+
+              <h3>NOME</h3>
+            </div>
+
+            <span class="member-status"> ALIVE </span>
+          </div>
+
+          <p class="member-title">O QUE SE RECUSA A CALAR</p>
+
+          <div class="member-description">
+            <p>
+              Cabelo cacheado, mullet e uma guitarra quase sempre soterrada em
+              fuzz e overdrive. Ele é um <b>Antigo</b>, nome dado aos poucos que
+              ainda nasceram antes do mundo virar deserto.
+            </p>
+
+            <p>
+              Cresceu vendo cidades morrerem e estradas desaparecerem. Também
+              viu gente continuar se reunindo quando escutava amplificadores ao
+              longe.
+            </p>
+          </div>
+
+          <aside class="world-note">
+            <span>FIELD NOTE / ANTIGOS</span>
+
+            <p>
+              Restam poucos vivos que se lembram do mundo antes do Colapso. Para
+              muita gente, suas histórias parecem mais lendas do que memória.
+            </p>
+          </aside>
+
+          <blockquote>
+            “Se ainda dá pra ouvir, é porque ainda não acabou.”
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- MEMBER 02 -->
+
+      <section class="band-member member-orange reverse">
+        <div class="member-photo">
+          <img
+            src="assets/images/band/bass.jpg"
+            alt="Baixista da banda Desertia"
+          />
+
+          <span class="member-number"> 02 </span>
+
+          <span class="member-instrument"> BASS / SUPPLIES </span>
         </div>
 
-        <p id="location-description">
-          Uma cidade construída ao redor de três postos de combustível.
-          Aqui gasolina vale mais que dinheiro e água vale mais que gasolina.
-        </p>
+        <div class="member-file">
+          <div class="member-header">
+            <div>
+              <p class="kicker">BAIXO / SUPRIMENTOS / NEGÓCIOS</p>
 
-        <strong id="location-note">
-          ÚLTIMO SHOW: "ninguém morreu. tecnicamente."
-        </strong>
+              <h3>NOME</h3>
+            </div>
 
-      </div>
-
-    </section>
-
-
-    <!-- TOUR -->
-
-    <section class="tour">
-
-      <div class="tour-title">
-
-        <p>
-          DESERTIA PRESENTS
-        </p>
-
-        <h2>
-          THE END<br>
-          OF THE WORLD<br>
-          TOUR
-        </h2>
-
-        <strong>
-          NO REFUNDS
-        </strong>
-
-      </div>
-
-
-      <div class="tour-dates">
-
-        <article>
-
-          <span>14 JUN</span>
-
-          <div>
-            <h3>GAS TOWN</h3>
-            <p>COYOTE RADIOACTIVE BAR</p>
+            <span class="member-status"> ALIVE </span>
           </div>
 
-          <strong>DONE</strong>
+          <p class="member-title">CINCO CORDAS É MELHOR QUE QUATRO</p>
 
-        </article>
+          <div class="member-description">
+            <p>
+              Baixinha, cabelo curto, mechas azuis e um baixo de cinco cordas
+              que soa mais como uma máquina industrial.
+            </p>
 
-
-        <article>
-
-          <span>19 JUN</span>
-
-          <div>
-            <h3>RED MESA</h3>
-            <p>SURVIVORS FEST</p>
+            <p>
+              É quem entende o que realmente mantém alguém vivo: água,
+              combustível, munição, comida e saber quando alguém está tentando
+              te passar a perna.
+            </p>
           </div>
 
-          <strong>DONE</strong>
+          <aside class="world-note">
+            <span>FIELD NOTE / CRUZADOS</span>
 
-        </article>
+            <p>
+              O dinheiro antigo não vale nada. Algumas cidades usam
+              <b>Cruzados</b>, mas no Deserto quase tudo volta ao escambo. Um
+              carregador cheio pode valer mais que uma carteira inteira.
+            </p>
+          </aside>
 
+          <blockquote>“O baixo fala por ela.”</blockquote>
+        </div>
+      </section>
 
-        <article class="cancelled">
+      <!-- MEMBER 03 -->
 
-          <span>22 JUN</span>
+      <section class="band-member member-wine">
+        <div class="member-photo">
+          <img
+            src="assets/images/band/drums.jpg"
+            alt="Baterista da banda Desertia"
+          />
 
-          <div>
-            <h3>DEAD VALLEY</h3>
-            <p>HIGHWAY 17</p>
+          <span class="member-number"> 03 </span>
+
+          <span class="member-instrument"> DRUMS / BAD TEMPER </span>
+        </div>
+
+        <div class="member-file">
+          <div class="member-header">
+            <div>
+              <p class="kicker">BATERIA / SUCATA / PRÓTESE</p>
+
+              <h3>NOME</h3>
+            </div>
+
+            <span class="member-status"> ALIVE? </span>
           </div>
 
-          <strong>CANCELADO</strong>
+          <p class="member-title">SEMPRE DESTRÓI SUA BATERIA</p>
 
-        </article>
+          <div class="member-description">
+            <p>
+              Cabelo laranja cobrindo os olhos, pouca conversa e uma perna
+              robótica feita com peças que ninguém consegue identificar direito.
+            </p>
 
-
-        <article>
-
-          <span>27 JUN</span>
-
-          <div>
-            <h3>CRATER CITY</h3>
-            <p>REACTOR CLUB</p>
+            <p>
+              Ela também não sabe de onde aquilo veio. Só sabe que continua
+              funcionando.
+            </p>
           </div>
 
-          <strong>?</strong>
+          <aside class="world-note">
+            <span>FIELD NOTE / ZONAS</span>
 
-        </article>
+            <p>
+              As <b>Zonas</b> são regiões onde alguma coisa no Colapso saiu
+              especialmente errada. Há tecnologia impossível, instalações
+              abandonadas, mutações e máquinas que ainda obedecem ordens de
+              gente morta há décadas.
+            </p>
+          </aside>
 
+          <blockquote>
+            “Atrás da bateria parece querer destruir o mundo pela segunda vez.”
+          </blockquote>
+        </div>
+      </section>
 
-        <article class="mystery">
+      <!-- MEMBER 04 -->
 
-          <span>01 JUL</span>
+      <section class="band-member member-sand reverse">
+        <div class="member-photo">
+          <img
+            src="assets/images/band/rhythm-guitar.jpg"
+            alt="Guitarrista veterano da banda Desertia"
+          />
 
-          <div>
-            <h3>UNKNOWN</h3>
-            <p>COORDENADAS CORROMPIDAS</p>
+          <span class="member-number"> 04 </span>
+
+          <span class="member-instrument"> GUITAR / DRIVER </span>
+        </div>
+
+        <div class="member-file">
+          <div class="member-header">
+            <div>
+              <p class="kicker">GUITARRA / MOTORISTA / BOM SENSO</p>
+
+              <h3>NOME</h3>
+            </div>
+
+            <span class="member-status"> STILL HERE </span>
           </div>
 
-          <strong>106.6</strong>
+          <p class="member-title">UM HOMEM SIMPLES</p>
 
-        </article>
+          <div class="member-description">
+            <p>
+              Velho, barbado, óculos pequenos e rachados. Já perdeu gente demais
+              para se impressionar com monstros, mortos ou tempestades
+              estranhas.
+            </p>
 
-      </div>
+            <p>
+              Sabe que estrada não se mede só em quilômetros. Sabe quais cidades
+              recebem viajantes, quais cobram pedágio e quais devem ser
+              contornadas mesmo que isso custe dois dias.
+            </p>
+          </div>
 
-    </section>
+          <aside class="world-note">
+            <span>FIELD NOTE / ESTRADAS</span>
 
+            <p>
+              Entre uma cidade e outra existe muito mais nada do que mapa.
+              Tempestades mudam rotas, gangues controlam trechos inteiros e
+              algumas estradas levam a lugares que não estavam lá antes.
+            </p>
+          </aside>
 
-    <!-- ARCHIVE -->
+          <blockquote>
+            “O pai que ninguém pediu, mas todo mundo precisava.”
+          </blockquote>
+        </div>
+      </section>
 
-    <section class="archive-section">
+      <!-- MEMBER 05 -->
 
-      <div class="section-title">
+      <section class="band-member member-orange">
+        <div class="member-photo">
+          <img
+            src="assets/images/band/keys-radio.jpg"
+            alt="Tecladista e operador de rádio da banda Desertia"
+          />
 
-        <p class="kicker">
-          FOUND OBJECTS / DO NOT CLEAN
-        </p>
+          <span class="member-number"> 05 </span>
 
-        <h2>
-          BOOTLEG ARCHIVE
-        </h2>
+          <span class="member-instrument"> SYNTH / RADIO </span>
+        </div>
 
-        <p>
-          Algumas coisas sobreviveram porque alguém achou
-          que seriam importantes.
-        </p>
+        <div class="member-file">
+          <div class="member-header">
+            <div>
+              <p class="kicker">SYNTH / RÁDIO / ÚLTIMO PASSAGEIRO</p>
 
-      </div>
+              <h3>NOME</h3>
+            </div>
 
+            <span class="member-status"> SIGNAL OK </span>
+          </div>
 
-      <div class="archive-grid">
+          <p class="member-title">O ÚLTIMO PASSAGEIRO</p>
 
-        <article class="artifact">
+          <div class="member-description">
+            <p>
+              Alto, magro, desengonçado e quieto. Foi o último a entrar na
+              banda.
+            </p>
+
+            <p>
+              Coleciona rádios, fitas, sintetizadores e aparelhos encontrados
+              perto das Zonas e Fendas. É quem escuta primeiro quando alguma
+              máquina começa a fazer uma coisa que não deveria.
+            </p>
+          </div>
+
+          <aside class="world-note">
+            <span>FIELD NOTE / FENDAS</span>
+
+            <p>
+              Existem lugares onde o mundo parece ter sido rasgado. Rádios
+              recebem sinais impossíveis, bússolas enlouquecem e coisas
+              desaparecem para voltar em outro lugar ou outro tempo.
+            </p>
+          </aside>
+
+          <blockquote>
+            “A estação não estava transmitindo para longe. Estava transmitindo
+            para antes.”
+          </blockquote>
+        </div>
+      </section>
+      <!-- ROAD -->
+
+      <section class="road-section">
+        <div class="section-title">
+          <p class="kicker">ROUTE / UNKNOWN</p>
+
+          <h2>THE ROAD</h2>
+
+          <p>Não existe destino. Só lugares onde ainda não deu tudo errado.</p>
+        </div>
+
+        <div class="road-map">
+          <div class="map-line"></div>
+
+          <div class="road-map-data">
+            <span>
+              TRIP
+              <strong id="road-distance">284 KM</strong>
+            </span>
+
+            <span>
+              FUEL
+              <strong id="road-fuel">███░░</strong>
+            </span>
+          </div>
 
           <button
-            type="button"
-            data-artifact>
+            class="map-point"
+            data-location="gas-town"
+            style="--x: 13%; --y: 70%"
+          >
+            <span>01</span>
+            GAS TOWN
 
-            <span>ITEM #01</span>
-
-            <strong>
-              CASSETE TDK
-            </strong>
-
-            <small>
-              ABRIR ARQUIVO →
-            </small>
-
+            <small class="you-are-here"> YOU ARE HERE </small>
           </button>
-
-          <div class="artifact-content" hidden>
-
-            <p>
-              <b>DESERTIA DEMO</b>
-            </p>
-
-            <p>
-              LADO A<br>
-              01. DUST DEVIL<br>
-              02. BURN THE HIGHWAY
-            </p>
-
-            <p>
-              LADO B<br>
-              [APAGADO]
-            </p>
-
-          </div>
-
-        </article>
-
-
-        <article class="artifact">
 
           <button
-            type="button"
-            data-artifact>
+            class="map-point"
+            data-location="red-mesa"
+            style="--x: 34%; --y: 43%"
+          >
+            <span>02</span>
+            RED MESA
 
-            <span>ITEM #02</span>
-
-            <strong>
-              POLAROID
-            </strong>
-
-            <small>
-              ABRIR ARQUIVO →
-            </small>
-
+            <small class="you-are-here"> YOU ARE HERE </small>
           </button>
-
-          <div class="artifact-content" hidden>
-
-            <p>
-              Cinco integrantes aparecem diante de um posto abandonado.
-            </p>
-
-            <p>
-              Há uma sexta pessoa atrás deles.
-            </p>
-
-            <p>
-              <b>
-                Nenhum dos cinco sabe quem é.
-              </b>
-            </p>
-
-          </div>
-
-        </article>
-
-
-        <article class="artifact">
 
           <button
-            type="button"
-            data-artifact>
+            class="map-point danger"
+            data-location="dead-valley"
+            style="--x: 54%; --y: 65%"
+          >
+            <span>03</span>
+            DEAD VALLEY
 
-            <span>ITEM #03</span>
-
-            <strong>
-              RECIBO
-            </strong>
-
-            <small>
-              ABRIR ARQUIVO →
-            </small>
-
+            <small class="you-are-here"> YOU ARE HERE </small>
           </button>
-
-          <div class="artifact-content receipt">
-
-            <p>
-              HIGHWAY 44
-            </p>
-
-            <p>
-              GASOLINA ........ 32L<br>
-              CERVEJA ......... 18<br>
-              MUNIÇÃO ......... 40<br>
-              ÁGUA ............ 02
-            </p>
-
-            <p>
-              TOTAL: ███████
-            </p>
-
-          </div>
-
-        </article>
-
-
-        <article class="artifact">
 
           <button
-            type="button"
-            data-artifact>
+            class="map-point"
+            data-location="crater-city"
+            style="--x: 73%; --y: 31%"
+          >
+            <span>04</span>
+            CRATER CITY
 
-            <span>ITEM #04</span>
-
-            <strong>
-              WANTED POSTER
-            </strong>
-
-            <small>
-              ABRIR ARQUIVO →
-            </small>
-
+            <small class="you-are-here"> YOU ARE HERE </small>
           </button>
 
-          <div class="artifact-content">
+          <button
+            class="map-point unknown"
+            data-location="radio-station"
+            style="--x: 88%; --y: 58%"
+          >
+            <span>?</span>
+            RADIO 106.6
 
-            <p>
-              PROCURADOS POR:
-            </p>
+            <small class="you-are-here"> YOU ARE HERE </small>
+          </button>
+        </div>
 
-            <p>
-              ROUBO DE COMBUSTÍVEL<br>
-              VANDALISMO<br>
-              TRANSMISSÃO ILEGAL<br>
-              HERESIA<br>
-              ROCK'N'ROLL
-            </p>
+        <div class="location-file">
+          <div class="location-stamp">ROAD LOG</div>
 
-            <p>
-              <b>ARMADOS E BARULHENTOS.</b>
-            </p>
+          <p class="kicker">CURRENT LOCATION</p>
 
+          <h3 id="location-name">GAS TOWN</h3>
+
+          <div class="location-meta">
+            <span>
+              POPULAÇÃO:
+              <strong id="location-population"> 312 </strong>
+            </span>
+
+            <span>
+              AMEAÇA:
+              <strong id="location-threat"> ●●○○○ </strong>
+            </span>
           </div>
 
-        </article>
+          <p id="location-description">
+            Uma cidade construída ao redor de três postos de combustível. Aqui
+            gasolina vale mais que dinheiro e água vale mais que gasolina.
+          </p>
 
-      </div>
+          <strong id="location-note">
+            ÚLTIMO SHOW: "ninguém morreu. tecnicamente."
+          </strong>
+        </div>
+      </section>
 
-    </section>
+      <!-- TOUR -->
 
+      <section class="tour">
+        <div class="tour-title">
+          <p>DESERTIA PRESENTS</p>
 
-    <!-- VEHICLE -->
+          <h2>
+            THE END<br />
+            OF THE WORLD<br />
+            TOUR
+          </h2>
 
-    <section class="vehicle-section">
-
-      <div class="vehicle-copy">
-
-        <p class="kicker">
-          VEHICLE / DR-01
-        </p>
-
-        <h2>
-          DESERT RAT
-        </h2>
-
-        <p>
-          Ninguém lembra qual era o modelo original.
-          Depois de tantas peças trocadas, provavelmente isso
-          já não importa.
-        </p>
-
-
-        <div class="vehicle-buttons">
-
-          <button data-part="engine">
-            MOTOR
-          </button>
-
-          <button data-part="radio">
-            RÁDIO
-          </button>
-
-          <button data-part="trunk">
-            PORTA-MALAS
-          </button>
-
-          <button data-part="backseat">
-            BANCO TRASEIRO
-          </button>
-
+          <strong> NO REFUNDS </strong>
         </div>
 
+        <div class="tour-dates">
+          <article data-tour-location="gas-town">
+            <span>14 JUN</span>
 
-        <div class="vehicle-file">
+            <div>
+              <h3>GAS TOWN</h3>
+              <p>COYOTE RADIOACTIVE BAR</p>
+            </div>
 
-          <small id="vehicle-label">
-            ENGINE
-          </small>
+            <strong class="tour-status played"> PLAYED </strong>
+          </article>
 
-          <p id="vehicle-description">
-            V8 remendado tantas vezes que nenhum cilindro
-            parece pertencer ao mesmo motor.
-          </p>
+          <article data-tour-location="red-mesa">
+            <span>19 JUN</span>
 
+            <div>
+              <h3>RED MESA</h3>
+              <p>SURVIVORS FEST</p>
+            </div>
+
+            <strong>DONE</strong>
+          </article>
+
+          <article data-tour-location="dead-valley" class="cancelled">
+            <span>22 JUN</span>
+
+            <div>
+              <h3>DEAD VALLEY</h3>
+              <p>HIGHWAY 17</p>
+            </div>
+
+            <strong class="tour-status dead"> NO SHOW </strong>
+          </article>
+
+          <article data-tour-location="crater city">
+            <span>27 JUN</span>
+
+            <div>
+              <h3>CRATER CITY</h3>
+              <p>REACTOR CLUB</p>
+            </div>
+
+            <strong>?</strong>
+          </article>
+
+          <article class="mystery">
+            <span>01 JUL</span>
+
+            <div>
+              <h3>UNKNOWN</h3>
+              <p>COORDENADAS CORROMPIDAS</p>
+            </div>
+
+            <strong class="tour-status signal"> 106.6 </strong>
+          </article>
+        </div>
+      </section>
+
+      <!-- ARCHIVE -->
+
+      <section class="archive-section">
+        <div class="archive-heading">
+          <div class="section-title">
+            <p class="kicker">FOUND OBJECTS / DO NOT CLEAN</p>
+
+            <h2>BOOTLEG ARCHIVE</h2>
+
+            <p>
+              Algumas coisas sobreviveram porque alguém achou que seriam
+              importantes.
+            </p>
+          </div>
+
+          <div class="archive-counter">
+            <span> RECOVERED </span>
+
+            <strong id="archive-count"> 00 / 04 </strong>
+          </div>
         </div>
 
-      </div>
+        <div class="archive-grid">
+          <!-- CASSETTE -->
 
+          <article class="artifact artifact-cassette" data-archive-item>
+            <button type="button" data-artifact>
+              <span class="artifact-id"> ITEM #01 </span>
 
-      <div class="vehicle-art">
+              <div class="cassette-object">
+                <div class="cassette-object-label">
+                  <small> TDK / DSRT DEMO </small>
 
-        <div class="car-body">
+                  <strong> DESERTIA </strong>
+                </div>
 
-          <div class="car-window"></div>
+                <div class="cassette-object-window">
+                  <i></i>
 
-          <div class="car-roof"></div>
+                  <span> SIDE A </span>
 
-          <div class="car-wheel wheel-left"></div>
-          <div class="car-wheel wheel-right"></div>
+                  <i></i>
+                </div>
+              </div>
 
-          <div class="car-light"></div>
+              <div class="artifact-button-footer">
+                <strong> CASSETE TDK </strong>
 
+                <small> EXAMINAR → </small>
+              </div>
+            </button>
+
+            <div class="artifact-content" hidden>
+              <p class="artifact-meta">RECOVERED / GAS TOWN</p>
+
+              <p>
+                <b>DESERTIA DEMO</b>
+              </p>
+
+              <p>
+                LADO A<br />
+                01. DUST DEVIL<br />
+                02. BURN THE HIGHWAY
+              </p>
+
+              <p>
+                LADO B<br />
+                [APAGADO]
+              </p>
+
+              <p class="archive-note">
+                A fita parece ter sido gravada muitas vezes por cima de outra
+                coisa.
+              </p>
+            </div>
+          </article>
+
+          <!-- POLAROID -->
+
+          <article class="artifact artifact-polaroid" data-archive-item>
+            <button type="button" data-artifact>
+              <span class="artifact-id"> ITEM #02 </span>
+
+              <div class="polaroid-object">
+                <div class="polaroid-image">
+                  <!--
+            Quando tiver a imagem:
+
+            <img
+              src="assets/images/archive/polaroid.jpg"
+              alt="Fotografia encontrada da banda"
+            >
+            -->
+
+                  <span> NO IMAGE </span>
+                </div>
+
+                <p>HIGHWAY 44 / ?</p>
+              </div>
+
+              <div class="artifact-button-footer">
+                <strong> POLAROID </strong>
+
+                <small> EXAMINAR → </small>
+              </div>
+            </button>
+
+            <div class="artifact-content" hidden>
+              <p class="artifact-meta">RECOVERED / HIGHWAY 44</p>
+
+              <p>Cinco integrantes aparecem diante de um posto abandonado.</p>
+
+              <p>Há uma sexta pessoa atrás deles.</p>
+
+              <p>
+                <b> Nenhum dos cinco sabe quem é. </b>
+              </p>
+
+              <p class="archive-note">
+                O verso da fotografia está marcado com a data 17 anos antes de a
+                banda chegar ali.
+              </p>
+            </div>
+          </article>
+
+          <!-- RECEIPT -->
+
+          <article class="artifact artifact-receipt" data-archive-item>
+            <button type="button" data-artifact>
+              <span class="artifact-id"> ITEM #03 </span>
+
+              <div class="receipt-object">
+                <strong> HIGHWAY 44 </strong>
+
+                <span> GENERAL STORE </span>
+
+                <hr />
+
+                <p>
+                  GASOLINA ......... 32L<br />
+                  CERVEJA .......... 18<br />
+                  MUNIÇÃO .......... 40<br />
+                  ÁGUA ............. 02
+                </p>
+
+                <hr />
+
+                <strong> TOTAL ███████ </strong>
+              </div>
+
+              <div class="artifact-button-footer">
+                <strong> RECIBO </strong>
+
+                <small> EXAMINAR → </small>
+              </div>
+            </button>
+
+            <div class="artifact-content receipt" hidden>
+              <p class="artifact-meta">RECOVERED / DESERT RAT GLOVEBOX</p>
+
+              <p>A data foi rasgada.</p>
+
+              <p>
+                O posto Highway 44 está abandonado há pelo menos vinte anos.
+              </p>
+
+              <p class="archive-note">O recibo ainda cheira a gasolina.</p>
+            </div>
+          </article>
+
+          <!-- WANTED POSTER -->
+
+          <article class="artifact artifact-wanted" data-archive-item>
+            <button type="button" data-artifact>
+              <span class="artifact-id"> ITEM #04 </span>
+
+              <div class="wanted-object">
+                <small> WANTED </small>
+
+                <strong>
+                  THE<br />
+                  DESERTIA
+                </strong>
+
+                <span> DEAD OR LOUD </span>
+              </div>
+
+              <div class="artifact-button-footer">
+                <strong> WANTED POSTER </strong>
+
+                <small> EXAMINAR → </small>
+              </div>
+            </button>
+
+            <div class="artifact-content" hidden>
+              <p class="artifact-meta">ISSUED / AUTHORITY UNKNOWN</p>
+
+              <p>PROCURADOS POR:</p>
+
+              <p>
+                ROUBO DE COMBUSTÍVEL<br />
+                VANDALISMO<br />
+                TRANSMISSÃO ILEGAL<br />
+                HERESIA<br />
+                ROCK'N'ROLL
+              </p>
+
+              <p>
+                <b> ARMADOS E BARULHENTOS. </b>
+              </p>
+
+              <p class="archive-note">
+                A recompensa foi riscada e substituída à mão por “DUAS CAIXAS DE
+                CERVEJA”.
+              </p>
+            </div>
+          </article>
         </div>
 
-        <div class="vehicle-stats">
+        <div id="archive-complete" class="archive-complete" hidden>
+          <span> ARCHIVE STATUS </span>
 
-          <span>
-            ODOMETER
-            <strong>847221 KM</strong>
-          </span>
+          <strong> 04 OBJECTS CATALOGUED </strong>
 
-          <span>
-            FUEL
-            <strong>███░░</strong>
-          </span>
+          <p>Nenhum deles deveria estar na mesma linha do tempo.</p>
+        </div>
+      </section>
 
-          <span>
-            CONDITION
-            <strong>QUESTIONABLE</strong>
-          </span>
+      <!-- VEHICLE -->
 
+      <section class="vehicle-section">
+        <div class="vehicle-copy">
+          <p class="kicker">VEHICLE / DR-01</p>
+
+          <h2>DESERT RAT</h2>
+
+          <p>
+            Ninguém lembra qual era o modelo original. Depois de tantas peças
+            trocadas, provavelmente isso já não importa.
+          </p>
+
+          <div class="vehicle-file">
+            <div class="vehicle-file-header">
+              <small> INSPECTION </small>
+
+              <span id="vehicle-part-code"> DR-01 / ENG </span>
+            </div>
+
+            <strong id="vehicle-label"> ENGINE </strong>
+
+            <p id="vehicle-description">
+              V8 remendado tantas vezes que nenhum cilindro parece pertencer ao
+              mesmo motor.
+            </p>
+
+            <div id="vehicle-extra" class="vehicle-extra">
+              <span>
+                STATUS
+                <strong id="vehicle-part-status"> RUNNING </strong>
+              </span>
+            </div>
+          </div>
+
+          <p class="vehicle-instruction">
+            CLIQUE NOS PONTOS MARCADOS PARA INSPECIONAR
+          </p>
         </div>
 
-      </div>
+        <div class="vehicle-art">
+          <div class="vehicle-stage">
+            <span class="vehicle-name"> DR-01 </span>
 
-    </section>
+            <div class="car-body">
+              <div class="car-window"></div>
+              <div class="car-roof"></div>
 
+              <div class="car-wheel wheel-left"></div>
+              <div class="car-wheel wheel-right"></div>
 
-    <!-- SURVIVAL GUIDE -->
+              <div class="car-light"></div>
 
-    <section class="survival">
+              <!-- HOTSPOTS -->
 
-      <div class="survival-heading">
+              <button
+                class="vehicle-hotspot hotspot-engine active"
+                data-part="engine"
+                aria-label="Inspecionar motor"
+              >
+                <span>01</span>
+              </button>
 
-        <p class="kicker">
-          STOLEN FROM THE GLOVEBOX
-        </p>
+              <button
+                class="vehicle-hotspot hotspot-radio"
+                data-part="radio"
+                aria-label="Inspecionar rádio"
+              >
+                <span>02</span>
+              </button>
 
-        <h2>
-          DESERTIA<br>
-          SURVIVAL GUIDE
-        </h2>
+              <button
+                class="vehicle-hotspot hotspot-trunk"
+                data-part="trunk"
+                aria-label="Inspecionar porta-malas"
+              >
+                <span>03</span>
+              </button>
 
-      </div>
+              <button
+                class="vehicle-hotspot hotspot-backseat"
+                data-part="backseat"
+                aria-label="Inspecionar banco traseiro"
+              >
+                <span>04</span>
+              </button>
+            </div>
 
+            <div class="vehicle-legend">
+              <span> 01 ENGINE </span>
 
-      <div class="rules">
+              <span> 02 RADIO </span>
 
-        <article>
-          <span>01</span>
-          <p>Nunca durma perto da estrada.</p>
-        </article>
+              <span> 03 TRUNK </span>
 
-        <article>
-          <span>02</span>
-          <p>Água antes de munição.</p>
-        </article>
+              <span> 04 BACK SEAT </span>
+            </div>
+          </div>
 
-        <article>
-          <span>03</span>
-          <p>
-            Se alguém pedir carona depois do pôr do sol,
-            continue dirigindo.
+          <div class="vehicle-stats">
+            <span>
+              ODOMETER
+
+              <strong> 847221 KM </strong>
+            </span>
+
+            <span>
+              FUEL
+
+              <strong id="vehicle-fuel"> ███░░ </strong>
+            </span>
+
+            <span>
+              ENGINE HEAT
+
+              <strong id="vehicle-heat"> 18% </strong>
+            </span>
+
+            <span>
+              CONDITION
+
+              <strong id="vehicle-condition"> QUESTIONABLE </strong>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SURVIVAL GUIDE -->
+
+      <section class="survival">
+        <div class="survival-heading">
+          <p class="kicker">STOLEN FROM THE GLOVEBOX</p>
+
+          <h2>
+            DESERTIA<br />
+            SURVIVAL GUIDE
+          </h2>
+        </div>
+
+        <div class="rules">
+          <article>
+            <span>01</span>
+            <p>Nunca durma perto da estrada.</p>
+          </article>
+
+          <article>
+            <span>02</span>
+            <p>Água antes de munição.</p>
+          </article>
+
+          <article>
+            <span>03</span>
+            <p>
+              Se alguém pedir carona depois do pôr do sol, continue dirigindo.
+            </p>
+          </article>
+
+          <article>
+            <span>04</span>
+            <p>Nunca siga música no meio do deserto.</p>
+          </article>
+
+          <article>
+            <span>05</span>
+            <p>Se o rádio começar a falar seu nome, desligue o rádio.</p>
+          </article>
+
+          <article>
+            <span>06</span>
+            <p>Se ele continuar falando, pise fundo.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- GAME -->
+
+      <section class="game-info">
+        <div class="game-manifesto">
+          <p class="kicker">O JOGO / DESERTIA ONE-PAGE RPG</p>
+
+          <h2>
+            RODE.<br />
+            TOQUE.<br />
+            SOBREVIVA.
+          </h2>
+
+          <p class="game-intro">
+            O mundo acabou há cinquenta anos. Isso não significa que a turnê foi
+            cancelada.
           </p>
-        </article>
+        </div>
 
-        <article>
-          <span>04</span>
+        <div class="game-rules">
+          <article>
+            <span class="game-number"> 01 </span>
+
+            <div>
+              <strong> RODE </strong>
+
+              <p>
+                Atravesse estradas quebradas, cidades improvisadas, Zonas
+                contaminadas e quilômetros de absolutamente nada.
+              </p>
+            </div>
+          </article>
+
+          <article>
+            <span class="game-number"> 02 </span>
+
+            <div>
+              <strong> TOQUE </strong>
+
+              <p>
+                Faça shows onde ainda houver gente viva o bastante para ouvir.
+                Música abre portas que munição não consegue.
+              </p>
+            </div>
+          </article>
+
+          <article>
+            <span class="game-number"> 03 </span>
+
+            <div>
+              <strong> SOBREVIVA </strong>
+
+              <p>
+                Controle combustível, água, munição e más decisões enquanto o
+                Deserto tenta cobrar tudo de volta.
+              </p>
+            </div>
+          </article>
+
+          <div class="game-specs">
+            <span>
+              PLAYERS
+              <strong>2–6</strong>
+            </span>
+
+            <span>
+              MATERIAL
+              <strong>DADOS + PAPEL</strong>
+            </span>
+
+            <span>
+              RULES
+              <strong>1 PAGE</strong>
+            </span>
+
+            <span>
+              GENRE
+              <strong>DESERT PUNK</strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="game-final-line">
           <p>
-            Nunca siga música no meio do deserto.
+            Hoje são cinco dentro de um veículo que reclama em toda subida.
+            Carregam instrumentos, amplificadores, munição, combustível e comida
+            suficiente para alguns dias.
           </p>
-        </article>
 
-        <article>
-          <span>05</span>
-          <p>
-            Se o rádio começar a falar seu nome,
-            desligue o rádio.
-          </p>
-        </article>
+          <strong> NA FRENTE EXISTE MAIS DESERTO. </strong>
+        </div>
+      </section>
 
-        <article>
-          <span>06</span>
-          <p>
-            Se ele continuar falando,
-            pise fundo.
-          </p>
-        </article>
+      <!-- ACTIONS -->
 
-      </div>
+      <section class="actions">
+        <div class="download-panel">
+          <p class="kicker">END OF THE ROAD / START OF THE GAME</p>
 
-    </section>
+          <h2>
+            TAKE IT<br />
+            WITH YOU.
+          </h2>
 
+          <p>Uma página. Dados. Algumas pessoas. O resto o Deserto resolve.</p>
 
-    <!-- GAME -->
+          <div class="download-actions">
+            <a class="download-primary" href="#" aria-disabled="true">
+              <span> DESERTIA </span>
 
-    <section class="game-info">
+              <strong> BAIXAR ONE-PAGE </strong>
 
-      <div>
+              <small> PDF / EM BREVE </small>
+            </a>
 
-        <p>
-          Hoje são cinco dentro de um veículo
-          que reclama em toda subida.
-        </p>
+            <a class="download-secondary" href="#" aria-disabled="true">
+              <span> EXTRA CONTENT </span>
 
-        <p>
-          Carregam instrumentos, amplificadores, munição,
-          combustível, comida suficiente para alguns dias
-          e um monte de peças que talvez sirvam para alguma coisa.
-        </p>
+              <strong> EDIÇÃO COMPLETA </strong>
 
-        <p>
-          Atrás deles ficam cidades vazias, postos abandonados,
-          zonas contaminadas e alguns shows que provavelmente
-          ninguém vai esquecer.
-        </p>
+              <small> EM BREVE </small>
+            </a>
+          </div>
+        </div>
 
-        <p>
-          <b>
-            Na frente existe mais deserto.
-          </b>
-        </p>
+        <div class="road-oracle">
+          <div class="oracle-header">
+            <div>
+              <p class="kicker">GM EMERGENCY SYSTEM</p>
 
-      </div>
+              <h3>ROAD ORACLE</h3>
+            </div>
 
+            <span id="oracle-threat"> THREAT 02 </span>
+          </div>
 
-      <div>
+          <div class="oracle-screen">
+            <small id="oracle-category"> ROAD EVENT </small>
 
-        <p class="kicker">
-          O JOGO
-        </p>
+            <output id="road-result">
+              O rádio chia. Alguma coisa chama vocês pelo nome.
+            </output>
+          </div>
 
-        <h2>
-          RODE.<br>
-          TOQUE.<br>
-          SOBREVIVA.
-        </h2>
+          <button id="random-road" type="button">ROLL THE ROAD</button>
 
-      </div>
+          <div class="oracle-footer">
+            <span>
+              WEATHER
+              <strong id="oracle-weather"> DRY </strong>
+            </span>
 
-    </section>
+            <span>
+              VISIBILITY
+              <strong id="oracle-visibility"> GOOD </strong>
+            </span>
 
-
-    <!-- ACTIONS -->
-
-    <section class="actions">
-
-      <a
-        href="#"
-        aria-disabled="true">
-
-        BAIXAR ONE-PAGE [EM BREVE]
-
-      </a>
-
-      <a
-        href="#"
-        aria-disabled="true">
-
-        EDIÇÃO COMPLETA [EM BREVE]
-
-      </a>
-
-      <button
-        id="random-road"
-        type="button">
-
-        GERAR EVENTO DE ESTRADA
-
-      </button>
-
-      <output id="road-result">
-        O rádio chia. Alguma coisa chama vocês pelo nome.
-      </output>
-
-    </section>
-
-  </main>
-
-</body>
+            <span>
+              HEAT
+              <strong id="oracle-heat"> +0 </strong>
+            </span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>

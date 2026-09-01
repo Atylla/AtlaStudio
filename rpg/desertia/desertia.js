@@ -4,954 +4,1658 @@
 
 const tracks = [
   {
-    title: "01 — Burn the County Line",
+    title: "Burn the County Line",
+
     duration: "03:41",
-    src: "assets/audio/burn-the-county-line.mp3"
+
+    location: "COUNTY 6 / WEST HIGHWAY",
+
+    note: "Gravada depois de uma noite particularmente ruim perto da fronteira do Condado 6.",
+
+    src: "assets/audio/burn-the-county-line.mp3",
   },
+
   {
-    title: "02 — Red Sun Gospel",
+    title: "Red Sun Gospel",
+
     duration: "04:12",
-    src: "assets/audio/red-sun-gospel.mp3"
+
+    location: "RED MESA / SURVIVORS FEST",
+
+    note: "A primeira versão foi tocada em Red Mesa. A multidão pediu bis. O gerador explodiu antes que pudessem tocar de novo.",
+
+    src: "assets/audio/red-sun-gospel.mp3",
   },
+
   {
-    title: "03 — Last Static",
+    title: "Last Static",
+
     duration: "05:06",
-    src: "assets/audio/last-static.mp3"
-  }
+
+    location: "RADIO STATION 106.6",
+
+    note: "A última faixa gravada na estação. Existem vozes na fita que nenhum integrante da banda lembra de ter gravado.",
+
+    src: "assets/audio/last-static.mp3",
+  },
 ];
 
+/* ============================= */
+/* ELEMENTS */
+/* ============================= */
+
 const audio = document.querySelector("#audio");
+
 const playlist = document.querySelector("#playlist");
 
-const nowPlaying =
-  document.querySelector("#now-playing");
+const cassettePlayer = document.querySelector("#cassette-player");
 
-const playButton =
-  document.querySelector("#play");
+const nowPlaying = document.querySelector("#now-playing");
 
-const audioAnomaly =
-  document.querySelector("#audio-anomaly");
+const playButton = document.querySelector("#play");
+
+const deckStatus = document.querySelector("#deck-status");
+
+const cassetteTrackNumber = document.querySelector("#cassette-track-number");
+
+const trackLocation = document.querySelector("#track-location");
+
+const trackFileTitle = document.querySelector("#track-file-title");
+
+const trackFileText = document.querySelector("#track-file-text");
+
+const currentTimeDisplay = document.querySelector("#current-time");
+
+const totalTimeDisplay = document.querySelector("#total-time");
+
+const progressDuration = document.querySelector("#progress-duration");
+
+const trackProgress = document.querySelector("#track-progress");
+
+const musicVolume = document.querySelector("#music-volume");
+
+const audioAnomaly = document.querySelector("#audio-anomaly");
 
 let current = 0;
+
 let anomalyTriggered = false;
 
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds)) {
+    return "00:00";
+  }
+
+  const minutes = Math.floor(seconds / 60);
+
+  const remainingSeconds = Math.floor(seconds % 60);
+
+  return (
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(remainingSeconds).padStart(2, "0")
+  );
+}
+
+/* =========================================================
+   PLAYLIST
+========================================================= */
 
 function renderPlaylist() {
-
   playlist.innerHTML = "";
 
   tracks.forEach((track, index) => {
+    const li = document.createElement("li");
 
-    const li =
-      document.createElement("li");
-
-    li.className =
-      `track${index === current ? " active" : ""}`;
+    li.className = `track${index === current ? " active" : ""}`;
 
     li.innerHTML = `
-      <span>${track.title}</span>
-      <span>${track.duration}</span>
-    `;
 
-    li.addEventListener(
-      "click",
-      () => loadTrack(index, true)
-    );
+        <span class="track-number">
+          ${String(index + 1).padStart(2, "0")}
+        </span>
+
+        <span class="track-title">
+          ${track.title}
+        </span>
+
+        <span class="track-duration">
+          ${track.duration}
+        </span>
+
+      `;
+
+    li.addEventListener("click", () => {
+      loadTrack(index, true);
+    });
 
     playlist.append(li);
-
   });
-
 }
 
+/* =========================================================
+   LOAD TRACK
+========================================================= */
 
 function loadTrack(index, autoplay = false) {
+  current = (index + tracks.length) % tracks.length;
 
-  current =
-    (index + tracks.length) %
-    tracks.length;
+  const track = tracks[current];
 
-  const track =
-    tracks[current];
+  audio.src = track.src;
 
-  audio.src =
-    track.src;
+  nowPlaying.textContent = track.title;
 
-  nowPlaying.textContent =
-    track.title;
+  trackLocation.textContent = track.location;
+
+  trackFileTitle.textContent = track.title;
+
+  trackFileText.textContent = track.note;
+
+  cassetteTrackNumber.textContent = String(current + 1).padStart(2, "0");
+
+  currentTimeDisplay.textContent = "00:00";
+
+  totalTimeDisplay.textContent = track.duration;
+
+  progressDuration.textContent = track.duration;
+
+  trackProgress.value = 0;
 
   anomalyTriggered = false;
+
   audioAnomaly.hidden = true;
+
+  cassettePlayer.classList.remove("anomaly");
+
+  deckStatus.textContent = "TAPE READY";
 
   renderPlaylist();
 
   if (autoplay) {
-
-    audio.play()
-      .then(() => {
-        playButton.textContent =
-          "PAUSE";
-      })
-      .catch(() => {
-
-        nowPlaying.textContent =
-          `${track.title} — adicione o arquivo MP3`;
-
-      });
-
+    playTrack();
   }
-
 }
 
+/* =========================================================
+   PLAY
+========================================================= */
 
-playButton.addEventListener(
-  "click",
-  () => {
+function playTrack() {
+  audio
+    .play()
 
-    if (!audio.src) {
-      loadTrack(current);
-    }
+    .then(() => {
+      playButton.textContent = "Ⅱ PAUSE";
 
-    if (audio.paused) {
+      deckStatus.textContent = "PLAY";
 
-      audio.play()
-        .then(() => {
+      cassettePlayer.classList.add("playing");
+    })
 
-          playButton.textContent =
-            "PAUSE";
+    .catch(() => {
+      deckStatus.textContent = "TAPE ERROR";
 
-        })
-        .catch(() => {
+      nowPlaying.textContent = `${tracks[current].title} — arquivo não encontrado`;
+    });
+}
 
-          nowPlaying.textContent =
-            `${tracks[current].title} — arquivo ainda não adicionado`;
+/* =========================================================
+   PAUSE
+========================================================= */
 
-        });
+function pauseTrack() {
+  audio.pause();
 
-    } else {
+  playButton.textContent = "▶ PLAY";
 
-      audio.pause();
+  deckStatus.textContent = "PAUSED";
 
-      playButton.textContent =
-        "PLAY";
+  cassettePlayer.classList.remove("playing");
+}
 
-    }
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
 
+playButton.addEventListener("click", () => {
+  if (!audio.src) {
+    loadTrack(current);
   }
-);
 
-
-document
-  .querySelector("#prev")
-  .addEventListener(
-    "click",
-    () => loadTrack(current - 1, true)
-  );
-
-
-document
-  .querySelector("#next")
-  .addEventListener(
-    "click",
-    () => loadTrack(current + 1, true)
-  );
-
-
-audio.addEventListener(
-  "ended",
-  () => loadTrack(current + 1, true)
-);
-
-
-/*
-  Pequeno segredo:
-
-  aos 3:17 de Last Static
-  uma mensagem aparece.
-*/
-
-audio.addEventListener(
-  "timeupdate",
-  () => {
-
-    if (
-      current === 2 &&
-      audio.currentTime >= 197 &&
-      !anomalyTriggered
-    ) {
-
-      anomalyTriggered = true;
-
-      audioAnomaly.hidden = false;
-
-      increaseHeat(12);
-
-    }
-
+  if (audio.paused) {
+    playTrack();
+  } else {
+    pauseTrack();
   }
-);
+});
 
+/* =========================================================
+   PREVIOUS / NEXT
+========================================================= */
 
+document.querySelector("#prev").addEventListener("click", () => {
+  loadTrack(current - 1, true);
+});
+
+document.querySelector("#next").addEventListener("click", () => {
+  loadTrack(current + 1, true);
+});
+
+/* =========================================================
+   AUDIO TIME
+========================================================= */
+
+audio.addEventListener("timeupdate", () => {
+  const currentTime = audio.currentTime;
+
+  const duration = audio.duration;
+
+  currentTimeDisplay.textContent = formatTime(currentTime);
+
+  if (Number.isFinite(duration)) {
+    trackProgress.value = (currentTime / duration) * 100;
+  }
+
+  /*
+      Last Static
+
+      03:17
+    */
+
+  if (current === 2 && currentTime >= 197 && !anomalyTriggered) {
+    triggerAnomaly();
+  }
+});
+
+/* =========================================================
+   METADATA
+========================================================= */
+
+audio.addEventListener("loadedmetadata", () => {
+  const duration = formatTime(audio.duration);
+
+  totalTimeDisplay.textContent = duration;
+
+  progressDuration.textContent = duration;
+});
+
+/* =========================================================
+   SEEK
+========================================================= */
+
+trackProgress.addEventListener("input", () => {
+  if (!Number.isFinite(audio.duration)) {
+    return;
+  }
+
+  audio.currentTime = (Number(trackProgress.value) / 100) * audio.duration;
+});
+
+/* =========================================================
+   VOLUME
+========================================================= */
+
+musicVolume.addEventListener("input", () => {
+  audio.volume = Number(musicVolume.value);
+});
+
+audio.volume = Number(musicVolume.value);
+
+/* =========================================================
+   TRACK ENDED
+========================================================= */
+
+audio.addEventListener("ended", () => {
+  cassettePlayer.classList.remove("playing");
+
+  loadTrack(current + 1, true);
+});
+
+/* =========================================================
+   ANOMALY
+========================================================= */
+
+function triggerAnomaly() {
+  anomalyTriggered = true;
+
+  audioAnomaly.hidden = false;
+
+  cassettePlayer.classList.add("anomaly");
+
+  deckStatus.textContent = "⚠ SIGNAL ERROR";
+
+  /*
+    Pequeno aumento no HEAT.
+
+    Continua conectado ao resto
+    da página.
+  */
+
+  if (typeof increaseHeat === "function") {
+    increaseHeat(12);
+  }
+
+  /*
+    A interferência visual dura
+    alguns segundos.
+
+    A mensagem continua visível.
+  */
+
+  setTimeout(() => {
+    cassettePlayer.classList.remove("anomaly");
+
+    if (!audio.paused) {
+      deckStatus.textContent = "PLAY";
+    }
+  }, 4500);
+}
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+loadTrack(0);
 /* =========================================================
    RADIO
 ========================================================= */
 
+const MIN_FREQUENCY = 87.5;
+const MAX_FREQUENCY = 108.0;
+const FREQUENCY_STEP = 0.1;
+
+/*
+  Arquivos de áudio das transmissões.
+
+  Depois é só colocar seus arquivos em:
+
+  assets/audio/radio/
+
+  Por exemplo:
+
+  assets/audio/radio/highway-warning.mp3
+*/
+
 const stations = [
-
   {
-    frequency: "88.1",
-    title: "NO CARRIER",
-    text:
-      "Só estática. Por alguns segundos parece haver alguém respirando do outro lado.",
-    signal: 1,
-    heat: 2
+    frequency: 88.1,
+
+    title: "UNKNOWN SIGNAL",
+
+    text: "Existe alguma coisa muito fraca no meio da estática.",
+
+    src: "assets/audio/radio/unknown-88-1.mp3",
+
+    heat: 3,
   },
 
   {
-    frequency: "92.4",
+    frequency: 92.4,
+
     title: "HIGHWAY WARNING",
-    text:
-      "\"Se alguém ainda estiver ouvindo... não atravessem a Rodovia 17 depois do pôr do sol. Não parem para ninguém.\"",
-    signal: 3,
-    heat: 4
+
+    text: "Transmissão de emergência recebida da Rodovia 17.",
+
+    src: "assets/audio/radio/highway-warning.mp3",
+
+    heat: 4,
   },
 
   {
-    frequency: "97.7",
+    frequency: 97.7,
+
     title: "BLACK STAR EMERGENCY BROADCAST",
-    text:
-      "\"Esta frequência pertence à Black Star Militia. Civis devem permanecer fora das Zonas de Contenção 4, 6 e 11.\"",
-    signal: 4,
-    heat: 3
+
+    text: "Transmissão militar automática. A origem do sinal é desconhecida.",
+
+    src: "assets/audio/radio/black-star.mp3",
+
+    heat: 5,
   },
 
   {
-    frequency: "103.3",
+    frequency: 103.3,
+
     title: "UNKNOWN TRANSMISSION",
-    text:
-      "\"Pai? Se você estiver ouvindo isso... acho que conseguimos mandar o sinal para trás. Não sei quanto tempo.\"",
-    signal: 2,
-    heat: 7
+
+    text: "A voz parece estar tentando falar com alguém no passado.",
+
+    src: "assets/audio/radio/unknown-103-3.mp3",
+
+    heat: 7,
   },
 
   {
-    frequency: "106.6",
+    frequency: 106.6,
+
     title: "THE LAST STATIC",
-    text:
-      "Música distorcida atravessa a estática. Cinco pessoas discutem ao fundo. Alguém manda aumentar o volume.",
-    signal: 5,
-    heat: 2
+
+    text: "A transmissão da banda atravessa cinquenta anos de deserto.",
+
+    src: "assets/audio/radio/last-static-radio.mp3",
+
+    heat: 3,
   },
 
   {
-    frequency: "107.9",
-    title: "SIGNAL / SOURCE UNKNOWN",
-    text:
-      "Uma voz repete as coordenadas da estação onde a banda encontrou o transmissor. A gravação parece responder quando você aumenta o volume.",
-    signal: 2,
-    heat: 9
-  }
+    frequency: 107.9,
 
+    title: "SOURCE UNKNOWN",
+
+    text: "A origem desta transmissão não consta em nenhum registro.",
+
+    src: "assets/audio/radio/unknown-107-9.mp3",
+
+    heat: 9,
+  },
 ];
 
+const radioKnob = document.querySelector("#radio-knob");
 
-let stationIndex = 4;
+const radioAudio = document.querySelector("#radio-audio");
 
+const radio = document.querySelector(".radio");
 
-const frequencyDisplay =
-  document.querySelector(
-    "#frequency-display"
-  );
+const frequencyDisplay = document.querySelector("#frequency-display");
 
-const transmissionTitle =
-  document.querySelector(
-    "#transmission-title"
-  );
+const frequencyNeedle = document.querySelector("#frequency-needle");
 
-const transmissionText =
-  document.querySelector(
-    "#transmission-text"
-  );
+const transmissionTitle = document.querySelector("#transmission-title");
 
-const presetButtons =
-  document.querySelectorAll(
-    "[data-frequency]"
-  );
+const transmissionText = document.querySelector("#transmission-text");
 
-const signalBars =
-  document.querySelectorAll(
-    "#signal-bars i"
-  );
+const signalStatus = document.querySelector("#signal-status");
 
+const signalBars = document.querySelectorAll("#signal-bars i");
 
-function tuneStation(index) {
+let frequency = 106.6;
 
-  stationIndex =
-    (index + stations.length) %
-    stations.length;
+let draggingKnob = false;
 
-  const station =
-    stations[stationIndex];
+let currentStation = null;
 
-  frequencyDisplay.textContent =
-    station.frequency;
+let currentAudioSource = null;
 
-  transmissionTitle.textContent =
-    station.title;
+/*
+  Usado para evitar aumentar HEAT
+  infinitamente ao passar pela mesma
+  estação várias vezes.
+*/
 
-  transmissionText.textContent =
-    station.text;
+const discoveredStations = new Set();
 
+/* =========================================================
+   FREQUENCY
+========================================================= */
 
-  presetButtons.forEach(button => {
-
-    button.classList.toggle(
-      "active",
-      button.dataset.frequency ===
-        station.frequency
-    );
-
-  });
-
-
-  signalBars.forEach(
-    (bar, index) => {
-
-      bar.classList.toggle(
-        "active",
-        index < station.signal
-      );
-
-    }
-  );
-
-
-  increaseHeat(
-    station.heat
-  );
-
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
+function setFrequency(value) {
+  frequency = Math.round(value * 10) / 10;
 
-document
-  .querySelector("#freq-down")
-  .addEventListener(
-    "click",
-    () => tuneStation(stationIndex - 1)
-  );
+  frequency = clamp(frequency, MIN_FREQUENCY, MAX_FREQUENCY);
 
+  frequencyDisplay.textContent = frequency.toFixed(1);
 
-document
-  .querySelector("#freq-up")
-  .addEventListener(
-    "click",
-    () => tuneStation(stationIndex + 1)
-  );
+  radioKnob.setAttribute("aria-valuenow", frequency.toFixed(1));
 
+  updateKnobRotation();
 
-presetButtons.forEach(button => {
+  updateFrequencyNeedle();
 
-  button.addEventListener(
-    "click",
-    () => {
+  checkSignal();
+}
 
-      const index =
-        stations.findIndex(
-          station =>
-            station.frequency ===
-            button.dataset.frequency
-        );
+/* =========================================================
+   KNOB VISUAL
+========================================================= */
 
-      tuneStation(index);
+function updateKnobRotation() {
+  const percentage =
+    (frequency - MIN_FREQUENCY) / (MAX_FREQUENCY - MIN_FREQUENCY);
 
-    }
-  );
+  /*
+    Knob percorre 270 graus.
 
+    -135° = mínimo
+     135° = máximo
+  */
+
+  const rotation = -135 + percentage * 270;
+
+  radioKnob.style.setProperty("--rotation", `${rotation}deg`);
+}
+
+function updateFrequencyNeedle() {
+  const percentage =
+    (frequency - MIN_FREQUENCY) / (MAX_FREQUENCY - MIN_FREQUENCY);
+
+  frequencyNeedle.style.left = `${percentage * 100}%`;
+}
+
+/* =========================================================
+   KNOB INTERACTION
+========================================================= */
+
+function frequencyFromPointer(event) {
+  const rect = radioKnob.getBoundingClientRect();
+
+  const centerX = rect.left + rect.width / 2;
+
+  const centerY = rect.top + rect.height / 2;
+
+  const x = event.clientX - centerX;
+
+  const y = event.clientY - centerY;
+
+  /*
+    Converte posição do mouse
+    em ângulo.
+  */
+
+  let angle = (Math.atan2(y, x) * 180) / Math.PI;
+
+  /*
+    Deixamos 0° no topo.
+  */
+
+  angle += 90;
+
+  if (angle > 180) {
+    angle -= 360;
+  }
+
+  /*
+    Limita movimento físico do knob.
+  */
+
+  angle = clamp(angle, -135, 135);
+
+  const percentage = (angle + 135) / 270;
+
+  return MIN_FREQUENCY + percentage * (MAX_FREQUENCY - MIN_FREQUENCY);
+}
+
+radioKnob.addEventListener("pointerdown", (event) => {
+  draggingKnob = true;
+
+  radioKnob.setPointerCapture(event.pointerId);
+
+  const newFrequency = frequencyFromPointer(event);
+
+  setFrequency(newFrequency);
 });
 
+radioKnob.addEventListener("pointermove", (event) => {
+  if (!draggingKnob) {
+    return;
+  }
 
-document
-  .querySelector("#tune-in")
-  .addEventListener(
-    "click",
-    () => {
+  const newFrequency = frequencyFromPointer(event);
 
-      document
-        .querySelector("#radio")
-        .scrollIntoView({
-          behavior: "smooth"
-        });
+  setFrequency(newFrequency);
+});
 
-      tuneStation(4);
+radioKnob.addEventListener("pointerup", () => {
+  draggingKnob = false;
+});
 
+radioKnob.addEventListener("pointercancel", () => {
+  draggingKnob = false;
+});
+
+/* =========================================================
+   MOUSE WHEEL
+========================================================= */
+
+/*
+  Também dá para colocar o mouse
+  em cima do knob e usar a rodinha.
+
+  Pequeno detalhe, mas deixa o rádio
+  gostoso de usar.
+*/
+
+radioKnob.addEventListener(
+  "wheel",
+  (event) => {
+    event.preventDefault();
+
+    const direction = event.deltaY > 0 ? -1 : 1;
+
+    setFrequency(frequency + direction * FREQUENCY_STEP);
+  },
+  {
+    passive: false,
+  },
+);
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+radioKnob.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+    event.preventDefault();
+
+    setFrequency(frequency + FREQUENCY_STEP);
+  }
+
+  if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+    event.preventDefault();
+
+    setFrequency(frequency - FREQUENCY_STEP);
+  }
+});
+
+/* =========================================================
+   SIGNAL DETECTION
+========================================================= */
+
+function checkSignal() {
+  let nearestStation = null;
+
+  let nearestDistance = Infinity;
+
+  stations.forEach((station) => {
+    const distance = Math.abs(frequency - station.frequency);
+
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+
+      nearestStation = station;
     }
-  );
+  });
 
+  /*
+    Uma estação começa a aparecer
+    dentro de ±0.4 MHz.
+
+    Exemplo:
+
+    estação = 97.7
+
+    97.3 → começa sinal
+    97.5 → sinal razoável
+    97.7 → perfeito
+  */
+
+  const MAX_SIGNAL_DISTANCE = 0.4;
+
+  if (nearestDistance > MAX_SIGNAL_DISTANCE) {
+    noSignal();
+
+    return;
+  }
+
+  /*
+    1 = frequência perfeita
+    0 = limite da estação
+  */
+
+  const strength = 1 - nearestDistance / MAX_SIGNAL_DISTANCE;
+
+  updateSignalStrength(strength);
+
+  /*
+    Só consideramos que a estação
+    realmente foi sintonizada
+    perto do centro.
+  */
+
+  if (nearestDistance <= 0.08) {
+    lockStation(nearestStation);
+  } else {
+    weakStation(nearestStation, strength);
+  }
+}
+
+/* =========================================================
+   SIGNAL UI
+========================================================= */
+
+function updateSignalStrength(strength) {
+  const activeBars = Math.ceil(strength * signalBars.length);
+
+  signalBars.forEach((bar, index) => {
+    bar.classList.toggle("active", index < activeBars);
+  });
+}
+
+/* =========================================================
+   NO SIGNAL
+========================================================= */
+
+function noSignal() {
+  currentStation = null;
+
+  radio.classList.remove("receiving");
+
+  signalStatus.textContent = "SEARCHING";
+
+  transmissionTitle.textContent = "NO SIGNAL";
+
+  transmissionText.textContent = "KSSSSSSHHHHHHHHHHHH...";
+
+  updateSignalStrength(0);
+
+  stopRadioAudio();
+}
+
+/* =========================================================
+   WEAK SIGNAL
+========================================================= */
+
+function weakStation(station, strength) {
+  radio.classList.add("receiving");
+
+  currentStation = station;
+
+  if (strength < 0.35) {
+    signalStatus.textContent = "WEAK";
+
+    transmissionTitle.textContent = "SIGNAL DETECTED";
+
+    transmissionText.textContent = "Existe alguma coisa no meio da estática.";
+  } else if (strength < 0.7) {
+    signalStatus.textContent = "RECEIVING";
+
+    transmissionTitle.textContent = station.title;
+
+    transmissionText.textContent = "A transmissão está quase legível.";
+  } else {
+    signalStatus.textContent = "STRONG";
+
+    transmissionTitle.textContent = station.title;
+
+    transmissionText.textContent = station.text;
+  }
+
+  playStationAudio(station, strength);
+}
+
+/* =========================================================
+   LOCKED STATION
+========================================================= */
+
+function lockStation(station) {
+  radio.classList.remove("receiving");
+
+  currentStation = station;
+
+  signalStatus.textContent = "LOCKED";
+
+  transmissionTitle.textContent = station.title;
+
+  transmissionText.textContent = station.text;
+
+  updateSignalStrength(1);
+
+  playStationAudio(station, 1);
+
+  /*
+    Só aumenta HEAT na primeira
+    vez que encontra uma estação.
+  */
+
+  if (!discoveredStations.has(station.frequency)) {
+    discoveredStations.add(station.frequency);
+
+    if (typeof increaseHeat === "function") {
+      increaseHeat(station.heat);
+    }
+  }
+}
+
+/* =========================================================
+   RADIO AUDIO
+========================================================= */
+
+function playStationAudio(station, strength) {
+  /*
+    Se mudou de estação,
+    carrega o novo arquivo.
+  */
+
+  if (currentAudioSource !== station.src) {
+    currentAudioSource = station.src;
+
+    radioAudio.src = station.src;
+
+    radioAudio.currentTime = 0;
+
+    radioAudio.play().catch(() => {
+      /*
+          Navegadores podem bloquear
+          autoplay antes da primeira
+          interação do usuário.
+
+          Como o usuário precisa girar
+          o knob, normalmente isso
+          deixa de ser problema.
+        */
+    });
+  }
+
+  /*
+    O volume aumenta quando chegamos
+    perto da frequência correta.
+  */
+
+  const volume = clamp(strength, 0, 1);
+
+  radioAudio.volume = volume;
+}
+
+/* =========================================================
+   STOP AUDIO
+========================================================= */
+
+function stopRadioAudio() {
+  if (!radioAudio.paused) {
+    radioAudio.pause();
+  }
+
+  currentAudioSource = null;
+}
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+document.querySelector("#tune-in").addEventListener("click", () => {
+  document.querySelector("#radio").scrollIntoView({
+    behavior: "smooth",
+  });
+
+  /*
+        Começa perto da principal,
+        mas não exatamente nela.
+
+        Assim o usuário ainda precisa
+        girar o rádio um pouquinho.
+      */
+
+  setFrequency(106.2);
+});
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+setFrequency(106.2);
 
 /* =========================================================
    HEAT
 ========================================================= */
 
-let heat = 18;
+const AMBIENT_HEAT = 18;
 
+let heat = AMBIENT_HEAT;
 
-const heatFill =
-  document.querySelector(
-    "#heat-fill"
-  );
+const heatFill = document.querySelector("#heat-fill");
 
-const heatMiniFill =
-  document.querySelector(
-    "#heat-mini-fill"
-  );
+const heatMiniFill = document.querySelector("#heat-mini-fill");
 
-const heatValue =
-  document.querySelector(
-    "#heat-value"
-  );
+const heatValue = document.querySelector("#heat-value");
 
-const heatMiniValue =
-  document.querySelector(
-    "#heat-mini-value"
-  );
+const heatMiniValue = document.querySelector("#heat-mini-value");
 
-const heatStatus =
-  document.querySelector(
-    "#heat-status"
-  );
+const heatStatus = document.querySelector("#heat-status");
 
-const heatMessage =
-  document.querySelector(
-    "#heat-message"
-  );
+const heatMessage = document.querySelector("#heat-message");
 
+/* ============================= */
+/* HEAT MANAGEMENT */
+/* ============================= */
 
-function increaseHeat(amount) {
-
-  heat =
-    Math.min(
-      100,
-      heat + amount
-    );
+function setHeat(value) {
+  heat = Math.max(AMBIENT_HEAT, Math.min(100, Math.round(value)));
 
   updateHeat();
-
 }
 
+function increaseHeat(amount) {
+  setHeat(heat + amount);
+}
+
+function decreaseHeat(amount) {
+  setHeat(heat - amount);
+}
+
+/* ============================= */
+/* UPDATE UI */
+/* ============================= */
 
 function updateHeat() {
+  heatFill.style.width = `${heat}%`;
 
-  heatFill.style.width =
-    `${heat}%`;
-
-  heatMiniFill.style.width =
-    `${heat}%`;
-
-  heatValue.textContent =
-    `${heat}%`;
-
-  heatMiniValue.textContent =
-    `${heat}%`;
-
-
-  document.body.classList.remove(
-    "heat-warning",
-    "heat-critical"
-  );
-
-
-  if (heat < 35) {
-
-    heatStatus.textContent =
-      "MOTOR ESTÁVEL";
-
-    heatMessage.textContent =
-      "Ainda dá para continuar dirigindo.";
-
+  if (heatMiniFill) {
+    heatMiniFill.style.width = `${heat}%`;
   }
 
-  else if (heat < 60) {
+  heatValue.textContent = `${heat}%`;
 
-    heatStatus.textContent =
-      "TEMPERATURA ALTA";
+  if (heatMiniValue) {
+    heatMiniValue.textContent = `${heat}%`;
+  }
+
+  document.body.classList.remove("heat-warning", "heat-critical");
+
+  if (heat < 35) {
+    heatStatus.textContent = "MOTOR ESTÁVEL";
+
+    heatMessage.textContent = "Ainda dá para continuar dirigindo.";
+  } else if (heat < 60) {
+    heatStatus.textContent = "TEMPERATURA ALTA";
 
     heatMessage.textContent =
       "O painel começou a fazer barulhos que não fazia antes.";
-
-  }
-
-  else if (heat < 80) {
-
-    heatStatus.textContent =
-      "⚠ OVERHEAT";
+  } else if (heat < 80) {
+    heatStatus.textContent = "⚠ OVERHEAT";
 
     heatMessage.textContent =
       "O rádio está chiando. O motor está quente. Alguma coisa está seguindo vocês.";
 
-    document.body.classList.add(
-      "heat-warning"
-    );
-
-  }
-
-  else if (heat < 100) {
-
-    heatStatus.textContent =
-      "⚠⚠ DANGER";
+    document.body.classList.add("heat-warning");
+  } else if (heat < 100) {
+    heatStatus.textContent = "⚠⚠ DANGER";
 
     heatMessage.textContent =
       "Não pare. Não desligue o rádio. Não olhe para trás.";
 
-    document.body.classList.add(
-      "heat-critical"
-    );
+    document.body.classList.add("heat-critical");
+  } else {
+    heatStatus.textContent = "GET THE FUCK OUT.";
 
+    heatMessage.textContent = "O ponteiro atravessou o limite vermelho.";
+
+    document.body.classList.add("heat-critical");
   }
-
-  else {
-
-    heatStatus.textContent =
-      "GET THE FUCK OUT.";
-
-    heatMessage.textContent =
-      "O ponteiro atravessou o limite vermelho.";
-
-    document.body.classList.add(
-      "heat-critical"
-    );
-
-  }
-
 }
 
+/* =========================================================
+   THROTTLE
+========================================================= */
+
+const throttle = document.querySelector("#throttle");
+
+const throttleLabel = document.querySelector("#throttle-label");
+
+const speedValue = document.querySelector("#speed-value");
+
+const loadValue = document.querySelector("#load-value");
+
+const engineEvent = document.querySelector("#engine-event");
+
+const throttleModes = [
+  {
+    label: "IDLE",
+    speed: 0,
+    load: 0,
+    heat: -1,
+    message: "Motor em marcha lenta.",
+  },
+
+  {
+    label: "CRUISE",
+    speed: 45,
+    load: 20,
+    heat: 0,
+    message: "A Desert Rat segue sem reclamar muito.",
+  },
+
+  {
+    label: "PUSH",
+    speed: 75,
+    load: 40,
+    heat: 1,
+    message: "O motor começa a trabalhar de verdade.",
+  },
+
+  {
+    label: "HARD",
+    speed: 105,
+    load: 65,
+    heat: 2,
+    message: "A carroceria vibra. Alguma coisa no porta-malas caiu.",
+  },
+
+  {
+    label: "FULL",
+    speed: 135,
+    load: 85,
+    heat: 3,
+    message: "O escapamento cospe fogo. Provavelmente normal.",
+  },
+
+  {
+    label: "REDLINE",
+    speed: "???",
+    load: 100,
+    heat: 5,
+    message: "BAD IDEA. KEEP GOING.",
+  },
+];
+
+function updateThrottle() {
+  const value = Number(throttle.value);
+
+  const mode = throttleModes[value];
+
+  throttleLabel.textContent = mode.label;
+
+  speedValue.textContent = `${mode.speed} KM/H`;
+
+  loadValue.textContent = `${mode.load}%`;
+
+  engineEvent.textContent = mode.message;
+
+  /*
+    Dá uma classe especial quando
+    o jogador coloca no REDLINE.
+  */
+
+  throttle.classList.toggle("redline", value === 5);
+}
+
+throttle.addEventListener("input", updateThrottle);
+
+/* =========================================================
+   ENGINE LOOP
+========================================================= */
+
+/*
+  A cada 1.2 segundos o motor reage
+  à posição atual do acelerador.
+*/
+
+setInterval(() => {
+  const value = Number(throttle.value);
+
+  const mode = throttleModes[value];
+
+  /*
+      Em IDLE o motor esfria,
+      mas nunca abaixo da temperatura
+      ambiente do deserto.
+    */
+
+  if (mode.heat < 0 && heat > AMBIENT_HEAT) {
+    decreaseHeat(Math.abs(mode.heat));
+  }
+
+  if (mode.heat > 0) {
+    increaseHeat(mode.heat);
+  }
+}, 1200);
+
+/* =========================================================
+   RADIATOR
+========================================================= */
+
+const purgeButton = document.querySelector("#purge-radiator");
+
+const radiatorStatus = document.querySelector("#radiator-status");
+
+let radiatorReady = true;
+
+purgeButton.addEventListener("click", () => {
+  if (!radiatorReady) {
+    return;
+  }
+
+  radiatorReady = false;
+
+  /*
+      Resfriamento forte.
+    */
+
+  decreaseHeat(18);
+
+  engineEvent.textContent =
+    "KSSSSSSHHHH — vapor explode pelas laterais do capô.";
+
+  purgeButton.disabled = true;
+
+  /*
+      Cooldown visual.
+    */
+
+  let seconds = 8;
+
+  radiatorStatus.textContent = `PRESSURE ${seconds}s`;
+
+  const cooldown = setInterval(() => {
+    seconds -= 1;
+
+    radiatorStatus.textContent = `PRESSURE ${seconds}s`;
+
+    if (seconds <= 0) {
+      clearInterval(cooldown);
+
+      radiatorReady = true;
+
+      purgeButton.disabled = false;
+
+      radiatorStatus.textContent = "READY";
+    }
+  }, 1000);
+});
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+updateHeat();
+
+updateThrottle();
 
 /* =========================================================
    ROAD MAP
 ========================================================= */
 
 const locations = {
-
   "gas-town": {
-
     name: "GAS TOWN",
 
-    population:
-      "312",
+    population: "312",
 
-    threat:
-      "●●○○○",
+    threat: "●●○○○",
 
     description:
       "Uma cidade construída ao redor de três postos de combustível. Aqui gasolina vale mais que dinheiro e água vale mais que gasolina.",
 
-    note:
-      "ÚLTIMO SHOW: \"ninguém morreu. tecnicamente.\"",
+    note: 'ÚLTIMO SHOW: "ninguém morreu. tecnicamente."',
 
-    heat: 2
-
+    heat: 2,
   },
 
-
   "red-mesa": {
+    name: "RED MESA",
 
-    name:
-      "RED MESA",
+    population: "1.104",
 
-    population:
-      "1.104",
-
-    threat:
-      "●●●○○",
+    threat: "●●●○○",
 
     description:
       "Barracas, geradores, carros soldados uns aos outros e o maior mercado itinerante que a banda encontrou até agora.",
 
-    note:
-      "A BATERISTA FOI PROIBIDA DE VOLTAR AO SURVIVORS FEST.",
+    note: "A BATERISTA FOI PROIBIDA DE VOLTAR AO SURVIVORS FEST.",
 
-    heat: 3
-
+    heat: 3,
   },
 
-
   "dead-valley": {
+    name: "DEAD VALLEY",
 
-    name:
-      "DEAD VALLEY",
+    population: "0",
 
-    population:
-      "0",
-
-    threat:
-      "●●●●●",
+    threat: "●●●●●",
 
     description:
       "A estrada atravessa quilômetros de veículos abandonados. Alguns motores ainda estão quentes. Nenhum deles chegou ali recentemente.",
 
-    note:
-      "SHOW CANCELADO / MOTIVO OFICIAL: TEMPESTADE RADIOATIVA.",
+    note: "SHOW CANCELADO / MOTIVO OFICIAL: TEMPESTADE RADIOATIVA.",
 
-    heat: 8
-
+    heat: 8,
   },
 
-
   "crater-city": {
+    name: "CRATER CITY",
 
-    name:
-      "CRATER CITY",
+    population: "2.870",
 
-    population:
-      "2.870",
-
-    threat:
-      "●●●●○",
+    threat: "●●●●○",
 
     description:
       "Uma cidade construída dentro da cratera deixada por uma explosão que ninguém consegue identificar. À noite as paredes brilham.",
 
-    note:
-      "PRÓXIMO SHOW: REACTOR CLUB.",
+    note: "PRÓXIMO SHOW: REACTOR CLUB.",
 
-    heat: 5
-
+    heat: 5,
   },
 
-
   "radio-station": {
+    name: "RADIO 106.6",
 
-    name:
-      "RADIO 106.6",
+    population: "5",
 
-    population:
-      "5",
-
-    threat:
-      "?????",
+    threat: "?????",
 
     description:
       "Uma velha estação de rádio no meio de absolutamente nada. A energia estava ligada quando eles chegaram.",
 
-    note:
-      "A ANTENA NÃO TRANSMITE PARA LONGE. TRANSMITE PARA ANTES.",
+    note: "A ANTENA NÃO TRANSMITE PARA LONGE. TRANSMITE PARA ANTES.",
 
-    heat: 10
-
-  }
-
+    heat: 10,
+  },
 };
 
+const locationName = document.querySelector("#location-name");
 
-const locationName =
-  document.querySelector(
-    "#location-name"
-  );
+const locationPopulation = document.querySelector("#location-population");
 
-const locationPopulation =
-  document.querySelector(
-    "#location-population"
-  );
+const locationThreat = document.querySelector("#location-threat");
 
-const locationThreat =
-  document.querySelector(
-    "#location-threat"
-  );
+const locationDescription = document.querySelector("#location-description");
 
-const locationDescription =
-  document.querySelector(
-    "#location-description"
-  );
+const locationNote = document.querySelector("#location-note");
 
-const locationNote =
-  document.querySelector(
-    "#location-note"
-  );
+const mapPoints = document.querySelectorAll("[data-location]");
 
-const mapPoints =
-  document.querySelectorAll(
-    "[data-location]"
-  );
+mapPoints.forEach((point) => {
+  point.addEventListener("click", () => {
+    const location = locations[point.dataset.location];
 
+    mapPoints.forEach((item) => item.classList.remove("active"));
 
-mapPoints.forEach(point => {
+    point.classList.add("active");
 
-  point.addEventListener(
-    "click",
-    () => {
+    point.classList.add("visited");
 
-      const location =
-        locations[
-          point.dataset.location
-        ];
+    locationName.textContent = location.name;
 
-      mapPoints.forEach(
-        item =>
-          item.classList.remove(
-            "active"
-          )
-      );
+    locationPopulation.textContent = location.population;
 
-      point.classList.add(
-        "active"
-      );
+    locationThreat.textContent = location.threat;
 
-      locationName.textContent =
-        location.name;
+    locationDescription.textContent = location.description;
 
-      locationPopulation.textContent =
-        location.population;
+    locationNote.textContent = location.note;
 
-      locationThreat.textContent =
-        location.threat;
-
-      locationDescription.textContent =
-        location.description;
-
-      locationNote.textContent =
-        location.note;
-
-      increaseHeat(
-        location.heat
-      );
-
-    }
-  );
-
+    increaseHeat(location.heat);
+  });
 });
 
+const tourDates = document.querySelectorAll("[data-tour-location]");
 
+tourDates.forEach((date) => {
+  date.addEventListener("mouseenter", () => {
+    const location = date.dataset.tourLocation;
+
+    const mapPoint = document.querySelector(`[data-location="${location}"]`);
+
+    if (mapPoint) {
+      mapPoint.classList.add("tour-highlight");
+    }
+  });
+
+  date.addEventListener("mouseleave", () => {
+    mapPoints.forEach((point) => point.classList.remove("tour-highlight"));
+  });
+});
 /* =========================================================
    BOOTLEG ARCHIVE
 ========================================================= */
 
-const artifactButtons =
-  document.querySelectorAll(
-    "[data-artifact]"
-  );
+const artifactButtons = document.querySelectorAll("[data-artifact]");
 
+const archiveItems = document.querySelectorAll("[data-archive-item]");
 
-artifactButtons.forEach(button => {
+const archiveCount = document.querySelector("#archive-count");
 
-  let openedBefore = false;
+const archiveComplete = document.querySelector("#archive-complete");
 
-  button.addEventListener(
-    "click",
-    () => {
+const discoveredArtifacts = new Set();
 
-      const content =
-        button.nextElementSibling;
+function updateArchiveCount() {
+  const discovered = discoveredArtifacts.size;
 
-      const opening =
-        content.hidden;
+  const total = archiveItems.length;
 
-      content.hidden =
-        !content.hidden;
+  archiveCount.textContent = `${String(discovered).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
+  if (discovered === total) {
+    archiveComplete.hidden = false;
+  }
+}
 
-      button.querySelector(
-        "small"
-      ).textContent =
-        opening
-          ? "FECHAR ARQUIVO ↑"
-          : "ABRIR ARQUIVO →";
+artifactButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    const artifact = button.closest(".artifact");
 
+    const content = button.nextElementSibling;
 
-      if (
-        opening &&
-        !openedBefore
-      ) {
+    const opening = content.hidden;
 
-        openedBefore = true;
+    /*
+          Fecha os outros itens.
 
-        increaseHeat(4);
+          Isso mantém a section
+          muito mais limpa.
+        */
 
+    artifactButtons.forEach((otherButton) => {
+      if (otherButton === button) {
+        return;
       }
 
-    }
-  );
+      const otherArtifact = otherButton.closest(".artifact");
 
+      const otherContent = otherButton.nextElementSibling;
+
+      otherContent.hidden = true;
+
+      otherArtifact.classList.remove("open");
+
+      otherButton.querySelector(".artifact-button-footer small").textContent =
+        "EXAMINAR →";
+    });
+
+    /*
+          Abre / fecha atual.
+        */
+
+    content.hidden = !opening;
+
+    artifact.classList.toggle("open", opening);
+
+    button.querySelector(".artifact-button-footer small").textContent = opening
+      ? "FECHAR ↑"
+      : "EXAMINAR →";
+
+    /*
+          Primeira descoberta.
+        */
+
+    if (opening && !discoveredArtifacts.has(index)) {
+      discoveredArtifacts.add(index);
+
+      artifact.classList.add("discovered");
+
+      updateArchiveCount();
+
+      /*
+            Mantemos sua integração
+            com HEAT.
+          */
+
+      if (typeof increaseHeat === "function") {
+        increaseHeat(4);
+      }
+    }
+  });
 });
 
+updateArchiveCount();
 
 /* =========================================================
    VEHICLE
 ========================================================= */
 
 const vehicleParts = {
-
   engine: {
+    label: "ENGINE",
 
-    label:
-      "ENGINE",
+    code: "DR-01 / ENG",
 
     description:
-      "V8 remendado tantas vezes que nenhum cilindro parece pertencer ao mesmo motor. Funciona com gasolina, etanol e, segundo o guitarrista, \"qualquer coisa que queime\"."
+      'V8 remendado tantas vezes que nenhum cilindro parece pertencer ao mesmo motor. Funciona com gasolina, etanol e, segundo o guitarrista, "qualquer coisa que queime".',
 
+    status: "RUNNING",
   },
-
 
   radio: {
+    label: "LONG RANGE RADIO",
 
-    label:
-      "LONG RANGE RADIO",
+    code: "DR-01 / COM",
 
     description:
-      "Montado com peças encontradas nas Zonas. Depois da estação 106.6, começou a receber sinais mesmo quando está desligado."
+      "Montado com peças encontradas nas Zonas. Depois da estação 106.6, começou a receber sinais mesmo quando está desligado.",
 
+    status: "SIGNAL DETECTED",
   },
-
 
   trunk: {
+    label: "TRUNK",
 
-    label:
-      "TRUNK",
+    code: "DR-01 / CARGO",
 
     description:
-      "Três amplificadores, duas guitarras, um baixo, peças de bateria, galões de combustível, munição, cabos e quase nenhuma comida."
+      "Três amplificadores, duas guitarras, um baixo, peças de bateria, galões de combustível, munição, cabos e quase nenhuma comida.",
 
+    status: "OVER CAPACITY",
   },
 
-
   backseat: {
+    label: "BACK SEAT",
 
-    label:
-      "BACK SEAT",
+    code: "DR-01 / ???",
 
     description:
-      "Três latas vazias, uma guitarra quebrada e alguma coisa respirando debaixo de um cobertor. Ninguém quer verificar."
+      "Três latas vazias, uma guitarra quebrada e alguma coisa respirando debaixo de um cobertor. Ninguém quer verificar.",
 
-  }
-
+    status: "DO NOT CHECK",
+  },
 };
 
+const vehicleLabel = document.querySelector("#vehicle-label");
 
-const vehicleLabel =
-  document.querySelector(
-    "#vehicle-label"
-  );
+const vehicleDescription = document.querySelector("#vehicle-description");
 
-const vehicleDescription =
-  document.querySelector(
-    "#vehicle-description"
-  );
+const vehiclePartCode = document.querySelector("#vehicle-part-code");
 
-const vehicleButtons =
-  document.querySelectorAll(
-    "[data-part]"
-  );
+const vehiclePartStatus = document.querySelector("#vehicle-part-status");
 
+const vehicleButtons = document.querySelectorAll("[data-part]");
 
-vehicleButtons.forEach(button => {
+vehicleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const part = vehicleParts[button.dataset.part];
 
-  button.addEventListener(
-    "click",
-    () => {
+    vehicleButtons.forEach((item) => item.classList.remove("active"));
 
-      const part =
-        vehicleParts[
-          button.dataset.part
-        ];
+    button.classList.add("active");
 
-      vehicleButtons.forEach(
-        item =>
-          item.classList.remove(
-            "active"
-          )
-      );
+    vehicleLabel.textContent = part.label;
 
-      button.classList.add(
-        "active"
-      );
+    vehicleDescription.textContent = part.description;
 
-      vehicleLabel.textContent =
-        part.label;
+    vehiclePartCode.textContent = part.code;
 
-      vehicleDescription.textContent =
-        part.description;
+    vehiclePartStatus.textContent = part.status;
 
-
-      if (
-        button.dataset.part ===
-        "backseat"
-      ) {
-
-        increaseHeat(6);
-
-      }
-
+    if (button.dataset.part === "backseat") {
+      increaseHeat(6);
     }
-  );
-
+  });
 });
 
-
 /* =========================================================
-   RANDOM ROAD EVENTS
+   ROAD ORACLE
 ========================================================= */
 
 const roadEvents = [
+  {
+    category: "ROAD EVENT",
 
-  "Um posto aparece no mapa. O problema: ele não existia cinco minutos atrás.",
+    text: "Um posto aparece no mapa. O problema: ele não existia cinco minutos atrás.",
 
-  "O rádio sintoniza uma música que a banda ainda não compôs.",
+    threat: 3,
+  },
 
-  "Marcas de pneus saem da estrada e continuam em linha reta pelo deserto.",
+  {
+    category: "RADIO ANOMALY",
 
-  "Uma placa anuncia a mesma cidade pelos próximos 87 quilômetros.",
+    text: "O rádio sintoniza uma música que a banda ainda não compôs.",
 
-  "Há alguém no banco de trás. Ninguém lembra de tê-lo deixado entrar.",
+    threat: 4,
+  },
 
-  "O horizonte pisca como uma televisão velha.",
+  {
+    category: "TRACKS",
 
-  "Uma tempestade de areia vem na direção contrária ao vento.",
+    text: "Marcas de pneus saem da estrada e continuam em linha reta pelo deserto.",
 
-  "Um comboio passa por vocês. Todos os motoristas têm o mesmo rosto.",
+    threat: 2,
+  },
 
-  "Uma criança oferece água em troca de uma fita cassete específica.",
+  {
+    category: "NAVIGATION",
 
-  "O tanque está mais cheio do que estava vinte minutos atrás.",
+    text: "Uma placa anuncia a mesma cidade pelos próximos 87 quilômetros.",
 
-  "Ao longe existe um palco montado no meio do deserto. Há gente esperando pela banda.",
+    threat: 2,
+  },
 
-  "Um rádio enterrado na areia está tocando Last Static.",
+  {
+    category: "PASSENGER",
 
-  "A estrada desaparece por três quilômetros e reaparece exatamente onde deveria estar.",
+    text: "Há alguém no banco de trás. Ninguém lembra de tê-lo deixado entrar.",
 
-  "Uma torre de transmissão aparece no horizonte. O rádio marca 106.6 FM.",
+    threat: 5,
+  },
 
-  "Vocês encontram as próprias marcas de pneu vindo da direção oposta."
+  {
+    category: "ANOMALY",
 
+    text: "O horizonte pisca como uma televisão velha.",
+
+    threat: 4,
+  },
+
+  {
+    category: "WEATHER",
+
+    text: "Uma tempestade de areia vem na direção contrária ao vento.",
+
+    threat: 3,
+  },
+
+  {
+    category: "ENCOUNTER",
+
+    text: "Um comboio passa por vocês. Todos os motoristas têm o mesmo rosto.",
+
+    threat: 5,
+  },
+
+  {
+    category: "TRADER",
+
+    text: "Uma criança oferece água em troca de uma fita cassete específica.",
+
+    threat: 1,
+  },
+
+  {
+    category: "VEHICLE",
+
+    text: "O tanque está mais cheio do que estava vinte minutos atrás.",
+
+    threat: 3,
+  },
+
+  {
+    category: "SHOW",
+
+    text: "Ao longe existe um palco montado no meio do deserto. Há gente esperando pela banda.",
+
+    threat: 2,
+  },
+
+  {
+    category: "RADIO ANOMALY",
+
+    text: "Um rádio enterrado na areia está tocando Last Static.",
+
+    threat: 4,
+  },
+
+  {
+    category: "NAVIGATION",
+
+    text: "A estrada desaparece por três quilômetros e reaparece exatamente onde deveria estar.",
+
+    threat: 4,
+  },
+
+  {
+    category: "SIGNAL",
+
+    text: "Uma torre de transmissão aparece no horizonte. O rádio marca 106.6 FM.",
+
+    threat: 5,
+  },
+
+  {
+    category: "ANOMALY",
+
+    text: "Vocês encontram as próprias marcas de pneu vindo da direção oposta.",
+
+    threat: 5,
+  },
 ];
 
+const roadWeather = [
+  "DRY",
 
-document
-  .querySelector("#random-road")
-  .addEventListener(
-    "click",
-    () => {
+  "DUST",
 
-      const result =
-        roadEvents[
-          Math.floor(
-            Math.random() *
-            roadEvents.length
-          )
-        ];
+  "HOT WIND",
 
-      document
-        .querySelector("#road-result")
-        .textContent =
-          result;
+  "ASH",
 
-      increaseHeat(
-        Math.floor(
-          Math.random() * 7
-        ) + 3
-      );
+  "STATIC STORM",
 
-    }
+  "RED SKY",
+];
+
+const roadVisibility = ["GOOD", "FAIR", "POOR", "BAD", "???"];
+
+const roadResult = document.querySelector("#road-result");
+
+const oracleCategory = document.querySelector("#oracle-category");
+
+const oracleThreat = document.querySelector("#oracle-threat");
+
+const oracleWeather = document.querySelector("#oracle-weather");
+
+const oracleVisibility = document.querySelector("#oracle-visibility");
+
+const oracleHeat = document.querySelector("#oracle-heat");
+
+document.querySelector("#random-road").addEventListener("click", () => {
+  const event = roadEvents[Math.floor(Math.random() * roadEvents.length)];
+
+  const weather = roadWeather[Math.floor(Math.random() * roadWeather.length)];
+
+  const visibility =
+    roadVisibility[Math.floor(Math.random() * roadVisibility.length)];
+
+  /*
+        Quanto mais perigoso,
+        maior tende a ser o HEAT.
+      */
+
+  const heatGain = Math.max(
+    1,
+    event.threat + Math.floor(Math.random() * 4) - 1,
   );
 
+  roadResult.textContent = event.text;
+
+  oracleCategory.textContent = event.category;
+
+  oracleThreat.textContent = `THREAT 0${event.threat}`;
+
+  oracleWeather.textContent = weather;
+
+  oracleVisibility.textContent = visibility;
+
+  oracleHeat.textContent = `+${heatGain}`;
+
+  if (typeof increaseHeat === "function") {
+    increaseHeat(heatGain);
+  }
+});
 
 /* =========================================================
    START
