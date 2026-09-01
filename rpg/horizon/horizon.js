@@ -792,8 +792,22 @@ A distância não mudou desde a última consulta.`,
    ========================================================= */
 
 function downloadPDF() {
-
   print(
+    `DOCUMENT NOT FOUND | ERROR 404
+
+    [RECONEXÃO]
+
+DOCUMENT FIND
+    
+ACESSO.................NEGADO
+STATUS.................[EM BREVE]
+    `,
+    "error"
+  );
+
+
+  /*
+    print(
     "INICIANDO TRANSFERÊNCIA // PROJECT HORIZON ONE-PAGE RPG...",
     "success"
   );
@@ -807,6 +821,11 @@ function downloadPDF() {
 
   link.click();
   link.remove();
+   */
+
+
+
+
 }
 
 
